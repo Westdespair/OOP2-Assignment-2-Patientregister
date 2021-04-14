@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.ntnu.idata2001</groupId>
-    <artifactId>Patientregistry</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <artifactId>Patientregister</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
 
 
     <properties>
@@ -38,7 +38,7 @@
                     <release>${maven.compiler.target}</release>
                     <jlinkImageName>hellofx</jlinkImageName>
                     <launcher>launcher</launcher>
-                    <mainClass>idata2001.mappe2.patientregister.Patientregisterclient</mainClass>
+                    <mainClass>idata2001.mappe2.patientregister.PatientregisterClient</mainClass>
                 </configuration>
             </plugin>
 
