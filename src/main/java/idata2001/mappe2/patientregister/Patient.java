@@ -5,6 +5,8 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String socialSecurityNumber;
+    private String diagnosis;
+    private String generalPractitioner;
 
     /**
      * Constructor for instances of the Patient class.
@@ -14,6 +16,7 @@ public class Patient {
         this.firstName = initialFirstName;
         this.lastName = initialLastName;
         this.socialSecurityNumber = initialSocialSecurityNumber;
+
     }
 
     public String getFirstName() {
@@ -38,6 +41,22 @@ public class Patient {
 
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
+    }
+
+    public String getGeneralPractitioner() {
+        return generalPractitioner;
+    }
+
+    public void setGeneralPractitioner(String generalPractitioner) {
+        this.generalPractitioner = generalPractitioner;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
     }
 }
 
