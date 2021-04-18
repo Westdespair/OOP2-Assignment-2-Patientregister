@@ -2,7 +2,6 @@ package idata2001.mappe2.patientregister;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
 import javafx.util.Pair;
@@ -16,6 +15,8 @@ public class PatientregisterController {
      * Initializes the patientregistercontroller.
      */
     public void initialize() {
+        
+
 
     }
 
@@ -24,7 +25,7 @@ public class PatientregisterController {
      * TODO: Add functionality for actually receiving the inputs.
      */
     @FXML
-    public void showAddPatientDialogue(MouseEvent event) {
+    public void showAddPatientDialogue() {
 
 
         TextInputDialog firstNameDialog = new TextInputDialog("First name");
@@ -47,7 +48,7 @@ public class PatientregisterController {
      * TODO: Add functionality for choosing OK/Cancel
      */
     @FXML
-    public void showDeletePatientDialogue(MouseEvent event) {
+    public void showDeletePatientDialogue() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete patient confirmation");
         alert.setHeaderText("Delete confirmation");
@@ -66,11 +67,24 @@ public class PatientregisterController {
     public void showProgramInformationDialogue() {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.setTitle("Information Dialogue - About");
-        info.setHeaderText("Patientregister" + "Version " + "Put the current version here yeah" );
+        info.setHeaderText("Patientregister"
+                + "Version " + "Put the current version here yeah" );
 
-        info.setContentText("Created by " + "Sindre Skorpen @westdespair" + "Latest updated date");
+        info.setContentText("Created for NTNU by \n"
+                + "Sindre Skorpen | @westdespair\n"
+                + "Put the date here yeah");
 
         info.showAndWait();
+
+    }
+
+    /**
+     * Shows a dialogue allowing edits to a selected patient.
+     * TODO: Add a dialogue and start functionality on this method.
+     */
+    @FXML
+    public void showEditPatientDialogue() {
+
 
     }
 

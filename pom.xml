@@ -6,7 +6,7 @@
 
     <groupId>no.ntnu.idata2001</groupId>
     <artifactId>Patientregister</artifactId>
-    <version>0.1.3-SNAPSHOT</version>
+    <version>0.1.4-SNAPSHOT</version>
 
 
     <properties>
@@ -42,6 +42,7 @@
                     <mainClass>idata2001.mappe2.patientregister.PatientregisterClient</mainClass>
                 </configuration>
             </plugin>
+
 
         </plugins>
 

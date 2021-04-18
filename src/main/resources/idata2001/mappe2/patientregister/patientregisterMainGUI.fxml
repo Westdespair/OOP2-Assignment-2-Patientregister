@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -18,9 +19,9 @@
          <bottom>
             <TableView prefHeight="306.0" prefWidth="590.0" BorderPane.alignment="CENTER">
               <columns>
+                <TableColumn editable="false" prefWidth="173.0" text="First name" />
                 <TableColumn editable="false" prefWidth="173.0" text="Surname" />
                   <TableColumn editable="false" prefWidth="173.0" text="Social security number" />
-                <TableColumn editable="false" prefWidth="173.0" text="First name" />
               </columns>
             </TableView>
          </bottom>
@@ -30,15 +31,39 @@
                 <Menu mnemonicParsing="false" text="File">
                   <items>
                         <MenuItem mnemonicParsing="false" text="Import from .CSV" />
-                    <MenuItem mnemonicParsing="false" text="Export to CSV" />
+                    <MenuItem mnemonicParsing="false" text="Export to CSV">
+                           <graphic>
+                              <Separator prefWidth="200.0" />
+                           </graphic></MenuItem>
                         <MenuItem mnemonicParsing="false" text="Exit" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Add new patient     A" />
-                        <MenuItem mnemonicParsing="false" text="Edit selected patient     E" />
-                        <MenuItem mnemonicParsing="false" text="Remove selected patient     Delete" />
+                    <MenuItem fx:id="addPatientButton" mnemonicParsing="false" onAction="#showAddPatientDialogue" text="Add new patient     A">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@PersonPlusIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></MenuItem>
+                        <MenuItem fx:id="editPatientButton" mnemonicParsing="false" onAction="#showEditPatientDialogue" text="Edit selected patient     E">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@PersonSettingsIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></MenuItem>
+                        <MenuItem fx:id="removePatientButton" mnemonicParsing="false" onAction="#showDeletePatientDialogue" text="Remove selected patient     Delete">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@PersonMinusIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></MenuItem>
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -49,34 +74,39 @@
               </menus>
             </MenuBar>
          </top>
+         <left>
+            <ButtonBar maxHeight="-Infinity" prefHeight="17.0" prefWidth="279.0" BorderPane.alignment="CENTER">
+              <buttons>
+                <Button fx:id="addPatientButton" maxWidth="-Infinity" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showAddPatientDialogue" prefHeight="40.0" prefWidth="85.0">
+                     <graphic>
+                        <ImageView fitHeight="105.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@PersonPlusIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="removePatientButton" minWidth="50.0" mnemonicParsing="false" onMouseClicked="#showDeletePatientDialogue" prefHeight="26.0" prefWidth="78.0">
+                     <graphic>
+                        <ImageView fitHeight="105.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@PersonMinusIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="editPatientButton" minWidth="0.0" mnemonicParsing="false" onMouseClicked="#showEditPatientDialogue" prefHeight="40.0" prefWidth="79.0">
+                     <graphic>
+                        <ImageView fitHeight="105.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@PersonSettingsIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+              </buttons>
+            </ButtonBar>
+         </left>
       </BorderPane>
-      <ButtonBar layoutX="-12.0" layoutY="31.0" prefHeight="40.0" prefWidth="279.0">
-        <buttons>
-          <Button fx:id="addPatientButton" minWidth="47.0" mnemonicParsing="false" onMouseClicked="#showAddPatientDialogue" prefHeight="40.0" prefWidth="40.0">
-               <graphic>
-                  <ImageView fitHeight="105.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@PersonPlusIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-            <Button fx:id="removePatientButton" minWidth="50.0" mnemonicParsing="false" onMouseClicked="#showDeletePatientDialogue" prefHeight="26.0" prefWidth="78.0">
-               <graphic>
-                  <ImageView fitHeight="105.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@PersonMinusIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-            <Button fx:id="editPatientButton" minWidth="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0">
-               <graphic>
-                  <ImageView fitHeight="105.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@PersonSettingsIcon.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-        </buttons>
-      </ButtonBar>
    </children>
 </AnchorPane>
