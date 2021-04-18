@@ -15,7 +15,7 @@ public class PatientregisterClient extends Application {
     @Override
     public void start(Stage appStage) throws Exception {
         //Fetches the .FXML file.
-        Parent root = FXMLLoader.load(getClass().getResource("patientregisterGUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("patientregisterMainGUI.fxml"));
         appStage.setTitle("Cardgame");
         //Starts the new scene and sets an initial size.
         appStage.setScene(new Scene(root, 565, 385));
