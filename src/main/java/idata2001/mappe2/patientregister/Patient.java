@@ -11,10 +11,12 @@ public class Patient {
     /**
      * Constructor for instances of the Patient class.
      * Patients have firstnames, lastnames, and an SSN to identify them by.
+     * Patients do not start with a diagnosis, it needs to be added at a later time.
      */
-    public Patient (String initialFirstName, String initialLastName, String initialSocialSecurityNumber) {
+    public Patient (String initialFirstName, String initialLastName,String initialGeneralPractitioner, String initialSocialSecurityNumber) {
         this.firstName = initialFirstName;
         this.lastName = initialLastName;
+        this.generalPractitioner = initialGeneralPractitioner;
         this.socialSecurityNumber = initialSocialSecurityNumber;
 
     }

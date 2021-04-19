@@ -19,9 +19,9 @@
          <bottom>
             <TableView prefHeight="306.0" prefWidth="590.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn editable="false" prefWidth="173.0" text="First name" />
-                <TableColumn editable="false" prefWidth="173.0" text="Surname" />
-                  <TableColumn editable="false" prefWidth="173.0" text="Social security number" />
+                <TableColumn fx:id="firstNameColumn" editable="false" prefWidth="173.0" text="First name" />
+                <TableColumn fx:id="lastNameColumn" editable="false" prefWidth="173.0" text="Surname" />
+                  <TableColumn fx:id="socialSecurityColumn" editable="false" prefWidth="173.0" text="Social security number" />
               </columns>
             </TableView>
          </bottom>
@@ -30,17 +30,17 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                        <MenuItem mnemonicParsing="false" text="Import from .CSV" />
-                    <MenuItem mnemonicParsing="false" text="Export to CSV">
+                        <MenuItem fx:id="importCSVFileMenuItem" mnemonicParsing="false" onAction="#chooseFile" text="Import from .CSV" />
+                    <MenuItem fx:id="exportCSVFileMenuItem" mnemonicParsing="false" text="Export to CSV">
                            <graphic>
                               <Separator prefWidth="200.0" />
                            </graphic></MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Exit" />
+                        <MenuItem fx:id="exitProgramMenuItem" mnemonicParsing="false" text="Exit" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem fx:id="addPatientButton" mnemonicParsing="false" onAction="#showAddPatientDialogue" text="Add new patient     A">
+                    <MenuItem fx:id="addPatientMenuItem" mnemonicParsing="false" onAction="#showAddPatientDialogue" text="Add new patient     A">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -48,7 +48,7 @@
                                  </image>
                               </ImageView>
                            </graphic></MenuItem>
-                        <MenuItem fx:id="editPatientButton" mnemonicParsing="false" onAction="#showEditPatientDialogue" text="Edit selected patient     E">
+                        <MenuItem fx:id="editPatientMenuItem" mnemonicParsing="false" onAction="#showEditPatientDialogue" text="Edit selected patient     E">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -56,7 +56,7 @@
                                  </image>
                               </ImageView>
                            </graphic></MenuItem>
-                        <MenuItem fx:id="removePatientButton" mnemonicParsing="false" onAction="#showDeletePatientDialogue" text="Remove selected patient     Delete">
+                        <MenuItem fx:id="removePatientMenuItem" mnemonicParsing="false" onAction="#showDeletePatientDialogue" text="Remove selected patient     Delete">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

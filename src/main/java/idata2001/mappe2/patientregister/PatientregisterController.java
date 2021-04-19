@@ -1,13 +1,30 @@
 package idata2001.mappe2.patientregister;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Dialog;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
-import javafx.util.Pair;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class PatientregisterController {
 
+    @FXML
+    private Button editPatientButton;
+
+    @FXML
+    private Button removePatientButton;
+
+    @FXML
+    private Button addPatientButton;
+
+    @FXML
+    private MenuItem aboutButton;
+
+    private String appVersion = " FIX ME LATER";
 
     public PatientregisterController() {}
 
@@ -61,18 +78,18 @@ public class PatientregisterController {
 
     /**
      * Shows information about the patientregister app.
-     * TODO: Make the program show accurate version and build date.
+     * TODO: Make the method show current build version and build release date.
      */
     @FXML
     public void showProgramInformationDialogue() {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setTitle("Information Dialogue - About");
+        info.setTitle("About this application");
         info.setHeaderText("Patientregister"
-                + "Version " + "Put the current version here yeah" );
+                + "Version " + appVersion );
 
-        info.setContentText("Created for NTNU by \n"
+        info.setContentText("Created for IDATA2001/NTNU by \n"
                 + "Sindre Skorpen | @westdespair\n"
-                + "Put the date here yeah");
+                + "2021");
 
         info.showAndWait();
 
@@ -84,6 +101,32 @@ public class PatientregisterController {
      */
     @FXML
     public void showEditPatientDialogue() {
+
+
+    }
+
+    /**
+     * ALlows the user to choose and return a file.
+     * Successfully returns the file at this point. TODO: Open the file and put it in the table on import.
+     * @return FILE the chosen file.
+     */
+    @FXML
+    public File chooseFile() throws NullPointerException{
+        //Uses one of the buttons hooked up to the scene to get the scene.
+        Scene mainScene = editPatientButton.getScene();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select .CSV file");
+
+        //Creates a new filter only consisting of .CSV files. This program will only work on files of that type.
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".CSV files", "*.csv"));
+
+        File selectedFile = fileChooser.showOpenDialog(mainScene.getWindow());
+            if (selectedFile == null) {
+                throw new NullPointerException("User tried to enter null as a file.");
+            }
+
+            return selectedFile;
 
 
     }
