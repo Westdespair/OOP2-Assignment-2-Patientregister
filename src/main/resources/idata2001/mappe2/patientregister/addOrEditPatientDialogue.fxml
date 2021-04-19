@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="467.0" prefWidth="392.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="idata2001.mappe2.patientregister.AddPatientDialogueBox">
+   <children>
+      <DialogPane fx:id="patientAddPopup" headerText="Patient Details - Add" layoutX="14.0" layoutY="23.0" prefHeight="107.0" prefWidth="360.0" />
+      <ButtonBar layoutX="194.0" layoutY="426.0">
+         <buttons>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="OK" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="Cancel" />
+         </buttons>
+      </ButtonBar>
+      <AnchorPane layoutY="34.0" prefHeight="200.0" prefWidth="360.0">
+         <children>
+            <TextField layoutX="145.0" layoutY="48.0" promptText="Last name" />
+            <TextField layoutX="145.0" layoutY="83.0" promptText="Social security number" />
+            <TextField editable="false" layoutX="145.0" layoutY="14.0" promptText="First name" />
+            <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name:" />
+            <Text layoutX="15.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last name:" />
+            <Text layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Social security number:" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
