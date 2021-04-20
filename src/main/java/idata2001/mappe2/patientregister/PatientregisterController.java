@@ -2,11 +2,10 @@ package idata2001.mappe2.patientregister;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.File;
 
@@ -74,6 +73,29 @@ public class PatientregisterController {
         // if (result.get() == ButtonType.OK) {Do the thing }
         // Else () { Don't do the thing}
         alert.show();
+    }
+
+    /**
+     * Starts a confirmation dialogue.
+     * Exits the application if OK is selected, does nothing if CANCEL is selected.
+     * TODO: Only ask for exit confirmation if there is progress to lose on the file.
+     */
+    @FXML
+    public void showCloseApplicationDialogue() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit application");
+        alert.setHeaderText("Exit confirmation");
+        alert.setContentText("Are you sure you want to exit? Unexported progress will be lost.");
+        Stage stage = (Stage) editPatientButton.getScene().getWindow();
+
+        //Shows the alert and waits for a response.
+        //If the OK button is pressed, close the application. If anything else is pressed, do nothing.
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                //CLOSE IT DOWN
+                stage.close();
+            }
+        });
     }
 
     /**
