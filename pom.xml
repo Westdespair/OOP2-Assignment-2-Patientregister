@@ -8,7 +8,6 @@
     <artifactId>Patientregister</artifactId>
     <version>0.1.6-SNAPSHOT</version>
 
-
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
@@ -17,7 +16,6 @@
     </properties>
 
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -43,9 +41,7 @@
                 </configuration>
             </plugin>
 
-
         </plugins>
-
     </build>
 
     <dependencies>
@@ -54,11 +50,13 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.7.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>

@@ -121,10 +121,11 @@ public class PatientregisterController {
         //Creates a new filter only consisting of .CSV files. This program will only work on files of that type.
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".CSV files", "*.csv"));
 
+        //Opens up the fileChooser as a dialog.
         File selectedFile = fileChooser.showOpenDialog(mainScene.getWindow());
         String selectedFilePath = "";
 
-
+        //Prints error statement if no file is selected, or gets the files absolute path if it is.
         if (selectedFile == null) {
             System.out.println("No files were selected in the filechooser.");
         } else {
