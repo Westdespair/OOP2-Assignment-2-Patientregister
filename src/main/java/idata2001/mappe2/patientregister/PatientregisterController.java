@@ -5,9 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class PatientregisterController {
 
@@ -23,7 +24,9 @@ public class PatientregisterController {
     @FXML
     private MenuItem aboutButton;
 
-    private String appVersion = " FIX ME LATER";
+    private final String appVersion = " FIX ME LATER";
+    private ArrayList<Patient> appPatientList;
+    private CSVReader csvReader;
 
     public PatientregisterController() {}
 
@@ -31,7 +34,10 @@ public class PatientregisterController {
      * Initializes the patientregistercontroller.
      */
     public void initialize() {
-        
+
+        appPatientList = new ArrayList<>();
+        csvReader = new CSVReader();
+
 
 
     }
@@ -127,6 +133,8 @@ public class PatientregisterController {
 
     }
 
+
+
     /**
      * ALlows the user to choose a .CSV file with the file browser, and returns the files path.
      * Successfully returns the file at this point. TODO: Open the file and put it in the table on import.
@@ -154,9 +162,20 @@ public class PatientregisterController {
             selectedFilePath = selectedFile.getAbsolutePath();
         }
 
+        System.out.println(selectedFilePath);
             return selectedFilePath;
 
 
     }
+
+    /**
+     * Chooses a file and prints the file info to console.
+     */
+    @FXML
+    public void chooseFileAndPrintToConsole() throws IOException {
+        csvReader.readFile(chooseFile());
+     //  csvReader.readFileWithFileSelect(chooseAndReturnCSVFile());
+    }
+
 
 }

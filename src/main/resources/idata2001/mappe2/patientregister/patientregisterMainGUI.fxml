@@ -20,8 +20,8 @@
             <TableView prefHeight="306.0" prefWidth="590.0" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="firstNameColumn" editable="false" prefWidth="173.0" text="First name" />
-                <TableColumn fx:id="lastNameColumn" editable="false" prefWidth="173.0" text="Surname" />
-                  <TableColumn fx:id="socialSecurityColumn" editable="false" prefWidth="173.0" text="Social security number" />
+                <TableColumn fx:id="lastNameColumn" editable="false" prefWidth="196.80003356933594" text="Surname" />
+                  <TableColumn fx:id="socialSecurityColumn" editable="false" prefWidth="207.199951171875" text="Social security number" />
               </columns>
             </TableView>
          </bottom>
@@ -30,7 +30,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                        <MenuItem fx:id="importCSVFileMenuItem" mnemonicParsing="false" onAction="#chooseFile" text="Import from .CSV" />
+                        <MenuItem fx:id="importCSVFileMenuItem" mnemonicParsing="false" onAction="#chooseFileAndPrintToConsole" text="Import from .CSV" />
                     <MenuItem fx:id="exportCSVFileMenuItem" mnemonicParsing="false" text="Export to CSV">
                            <graphic>
                               <Separator prefWidth="200.0" />
