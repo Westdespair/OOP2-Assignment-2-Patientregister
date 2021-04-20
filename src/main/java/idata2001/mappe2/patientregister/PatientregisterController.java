@@ -106,12 +106,12 @@ public class PatientregisterController {
     }
 
     /**
-     * ALlows the user to choose and return a file.
+     * ALlows the user to choose a .CSV file with the file browser, and returns the files path.
      * Successfully returns the file at this point. TODO: Open the file and put it in the table on import.
      * @return FILE the chosen file.
      */
     @FXML
-    public File chooseFile() throws NullPointerException{
+    public String chooseFile() {
         //Uses one of the buttons hooked up to the scene to get the scene.
         Scene mainScene = editPatientButton.getScene();
 
@@ -122,11 +122,16 @@ public class PatientregisterController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".CSV files", "*.csv"));
 
         File selectedFile = fileChooser.showOpenDialog(mainScene.getWindow());
-            if (selectedFile == null) {
-                throw new NullPointerException("User tried to enter null as a file.");
-            }
+        String selectedFilePath = "";
 
-            return selectedFile;
+
+        if (selectedFile == null) {
+            System.out.println("No files were selected in the filechooser.");
+        } else {
+            selectedFilePath = selectedFile.getAbsolutePath();
+        }
+
+            return selectedFilePath;
 
 
     }
