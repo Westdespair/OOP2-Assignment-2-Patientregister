@@ -85,20 +85,27 @@ public class PatientregisterController {
 
     /**
      * Shows a dialogue asking if the user is sure about deleting a patient.
-     * TODO: Add functionality for choosing OK/Cancel
      */
     @FXML
     public void showDeletePatientDialogue() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete patient confirmation");
-        alert.setHeaderText("Delete confirmation");
-        alert.setContentText("Are you sure you want to delete this patient?");
+        Patient deletePatient = getSelectedPatient();
 
-        // if (result.get() == ButtonType.OK) {Do the thing }
-        // Else () { Don't do the thing}
-        alert.show();
+        if (deletePatient == null) {
+            showNoSelectionDialogue();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete patient confirmation");
+            alert.setHeaderText("Delete confirmation");
+            alert.setContentText("Are you sure you want to delete this patient?");
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    appPatientList.getPatientList().remove(deletePatient);
+                }
+            });
+        }
+        showTables();
     }
-
     /**
      * Starts a confirmation dialogue.
      * Exits the application if OK is selected, does nothing if CANCEL is selected.
@@ -199,6 +206,27 @@ public class PatientregisterController {
         this.observablePatientList = FXCollections.observableArrayList(this.appPatientList.getPatientList());
         this.patientTableView.setItems(this.observablePatientList);
 
+    }
+
+    /**
+     * Returns the patient that is currently highlighted in the table.
+     */
+    public Patient getSelectedPatient() {
+       Patient selectedPatient = this.patientTableView.getSelectionModel().getSelectedItem();
+
+       if (selectedPatient == null) {
+           System.out.println("No patient selected.");
+       }
+
+       return selectedPatient;
+    }
+
+    public void showNoSelectionDialogue() {
+        Alert noSelectionAlert = new Alert(Alert.AlertType.INFORMATION);
+        noSelectionAlert.setTitle("No patient selected");
+        noSelectionAlert.setHeaderText("Patient information");
+        noSelectionAlert.setContentText("You need to select a patient by highlighting them in the table.");
+        noSelectionAlert.show();
     }
 
 

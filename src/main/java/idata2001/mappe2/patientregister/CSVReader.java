@@ -4,20 +4,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class CSVReader {
     BufferedReader reader;
 
     {
-
         }
-
         public CSVReader(){
-
-
-
         }
 
     /**
@@ -30,7 +27,7 @@ public class CSVReader {
         ArrayList CSVLineList = new ArrayList<String>();
 
             try {
-                reader = new BufferedReader(new FileReader(fileName));
+                reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 System.out.println("File not found!");
@@ -80,5 +77,6 @@ public class CSVReader {
         }
 
 
-    }
+
+}
 
