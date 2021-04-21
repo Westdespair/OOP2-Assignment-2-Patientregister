@@ -1,16 +1,22 @@
 package idata2001.mappe2.patientregister;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PatientregisterController {
+
+    private ObservableList<Patient> observablePatientList;
+    private final String appVersion = " FIX ME LATER";
+    private PatientList appPatientList;
+    private CSVReader csvReader;
 
     @FXML
     private Button editPatientButton;
@@ -24,22 +30,36 @@ public class PatientregisterController {
     @FXML
     private MenuItem aboutButton;
 
-    private final String appVersion = " FIX ME LATER";
-    private ArrayList<Patient> appPatientList;
-    private CSVReader csvReader;
+    @FXML
+    private TableView<Patient> patientTableView;
 
-    public PatientregisterController() {}
+    @FXML
+    private TableColumn<Patient, String> firstNameColumn;
+
+    @FXML
+    private TableColumn<Patient, String> lastNameColumn;
+
+    @FXML
+    private TableColumn<String, String> socialSecurityNumberColumn;
 
     /**
      * Initializes the patientregistercontroller.
      */
     public void initialize() {
 
-        appPatientList = new ArrayList<>();
+        appPatientList = new PatientList();
         csvReader = new CSVReader();
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        socialSecurityNumberColumn.setCellValueFactory(new PropertyValueFactory<>("socialSecurityNumber"));
+
+        //Test tableview functionality
+        //appPatientList.fillPatientListWithTestPatients();
 
 
-
+        this.observablePatientList =
+                FXCollections.observableArrayList(this.appPatientList.getPatientList());
+        this.patientTableView.setItems(this.observablePatientList);
     }
 
     /**
@@ -61,8 +81,6 @@ public class PatientregisterController {
 
         //Commented out example code from javafx dialogs official from code.makery.ch
         //result.ifPresent(name -> System.out.println("Your name: " + name));
-
-
     }
 
     /**
@@ -120,7 +138,6 @@ public class PatientregisterController {
                 + "2021");
 
         info.showAndWait();
-
     }
 
     /**
@@ -129,8 +146,6 @@ public class PatientregisterController {
      */
     @FXML
     public void showEditPatientDialogue() {
-
-
     }
 
 
@@ -164,17 +179,26 @@ public class PatientregisterController {
 
         System.out.println(selectedFilePath);
             return selectedFilePath;
+    }
+
+    /**
+     * Allows the user to choose a file through the filechooser. Displays the file in the programs tableview.
+     */
+    @FXML
+    public void importFile() throws IOException {
+        appPatientList.setPatientList(csvReader.buildPatientListFromCSVList(csvReader.readFile(chooseFile())));
+        showTables();
 
 
     }
 
     /**
-     * Chooses a file and prints the file info to console.
+     * Refreshes the tableView.
      */
-    @FXML
-    public void chooseFileAndPrintToConsole() throws IOException {
-        csvReader.readFile(chooseFile());
-     //  csvReader.readFileWithFileSelect(chooseAndReturnCSVFile());
+    public void showTables() {
+        this.observablePatientList = FXCollections.observableArrayList(this.appPatientList.getPatientList());
+        this.patientTableView.setItems(this.observablePatientList);
+
     }
 
 

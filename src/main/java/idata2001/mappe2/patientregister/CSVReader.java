@@ -20,7 +20,14 @@ public class CSVReader {
 
         }
 
-        public String readFile(String fileName) throws IOException {
+    /**
+     *
+     * @param fileName The absolute path to a file.
+     * @return CSVLineList An arrayList of strings, each being a line of a CSV-file.
+     * @throws IOException
+     */
+        public ArrayList<String> readFile(String fileName) throws IOException {
+        ArrayList CSVLineList = new ArrayList<String>();
 
             try {
                 reader = new BufferedReader(new FileReader(fileName));
@@ -28,17 +35,48 @@ public class CSVReader {
                 e.printStackTrace();
                 System.out.println("File not found!");
             }
-            System.out.println(reader.readLine());
 
-            return reader.readLine();
+            //Reads and skips the first line on its own because we won't be using the first line at this point.
+            String lineString = reader.readLine();
+            while (lineString != null) {
+                lineString = reader.readLine();
+                System.out.println(lineString);
 
+                if (lineString != null) {
+                    CSVLineList.add(lineString);
+                }
+                System.out.println(CSVLineList.get(CSVLineList.size()-1));
+            }
+
+            return CSVLineList;
         }
 
-        public ArrayList<Patient> buildPatientListFromCSV() {
+    /**
+     * Transforms a list of CSV lines with patient info into an arrayList with patient objects.
+     * @param CSVLineList An arrayList of strings that have information separated by semicolons (;).
+     *                   Must be formatted as follows:
+     *                   firstName;lastName;generalPractitioner;socialSecurityNumber
+     * @return patientList an arrayList filled with persons.
+     */
+    public ArrayList<Patient> buildPatientListFromCSVList(ArrayList<String> CSVLineList) {
         ArrayList<Patient> patientList = new ArrayList<>();
 
-        //Temp return statement to make it shut up.
+        for (String CSVLine : CSVLineList) {
+            patientList.add(producePatientFromCSVLine(CSVLine));
+        }
+
         return patientList;
+        }
+
+    /**
+     * Produces one patient from one line with information separated by semicolons.
+     * @param CSVLine String a line taken from a CSV-file. This will be a string separated by semicolons.
+     * @return Patient a new patient based on the information read from the param line.
+     */
+    public Patient producePatientFromCSVLine (String CSVLine) {
+        String[] splitStringList = CSVLine.split(";");
+
+        return new Patient(splitStringList[0],splitStringList[1] , splitStringList[2], splitStringList[3]);
         }
 
 
