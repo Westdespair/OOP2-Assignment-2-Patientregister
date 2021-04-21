@@ -17,6 +17,7 @@ public class PatientregisterController {
     private final String appVersion = " FIX ME LATER";
     private PatientList appPatientList;
     private CSVReader csvReader;
+    private PatientAddOrEditDialogue addOrEditDialogue;
 
     @FXML
     private Button editPatientButton;
@@ -52,6 +53,7 @@ public class PatientregisterController {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         socialSecurityNumberColumn.setCellValueFactory(new PropertyValueFactory<>("socialSecurityNumber"));
+        addOrEditDialogue = new PatientAddOrEditDialogue();
 
         //Test tableview functionality
         //appPatientList.fillPatientListWithTestPatients();
@@ -68,16 +70,7 @@ public class PatientregisterController {
      */
     @FXML
     public void showAddPatientDialogue() {
-
-
-        TextInputDialog firstNameDialog = new TextInputDialog("First name");
-        firstNameDialog.setContentText("First name: ");
-
-        TextInputDialog lastNameDialog = new TextInputDialog("Last name");
-        lastNameDialog.setContentText("Last name: ");
-
-        TextInputDialog socialSecurityNumberNameDialog = new TextInputDialog("Social security number");
-        socialSecurityNumberNameDialog.setContentText("Social security number");
+        addOrEditDialogue.showAddOrEditDialogue();
 
         //Commented out example code from javafx dialogs official from code.makery.ch
         //result.ifPresent(name -> System.out.println("Your name: " + name));
