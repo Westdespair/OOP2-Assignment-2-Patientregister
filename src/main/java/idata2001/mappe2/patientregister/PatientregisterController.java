@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 public class PatientregisterController {
 
@@ -17,7 +18,7 @@ public class PatientregisterController {
     private final String appVersion = " FIX ME LATER";
     private PatientList appPatientList;
     private CSVReader csvReader;
-    private PatientAddOrEditDialogue addOrEditDialogue;
+    private PatientAddOrEditDialogue addEditOrInfoDialogue;
 
     @FXML
     private Button editPatientButton;
@@ -53,7 +54,7 @@ public class PatientregisterController {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         socialSecurityNumberColumn.setCellValueFactory(new PropertyValueFactory<>("socialSecurityNumber"));
-        addOrEditDialogue = new PatientAddOrEditDialogue();
+        addEditOrInfoDialogue = new PatientAddOrEditDialogue();
 
         //Test tableview functionality
         //appPatientList.fillPatientListWithTestPatients();
@@ -62,6 +63,12 @@ public class PatientregisterController {
         this.observablePatientList =
                 FXCollections.observableArrayList(this.appPatientList.getPatientList());
         this.patientTableView.setItems(this.observablePatientList);
+
+        this.patientTableView.setOnMousePressed(mouseEvent -> {
+            if (mouseEvent.isPrimaryButtonDown() && (mouseEvent.getClickCount() == 2)) {
+                this.showPatientInformationDialogue();
+            }
+        });
     }
 
     /**
@@ -70,7 +77,10 @@ public class PatientregisterController {
      */
     @FXML
     public void showAddPatientDialogue() {
-        addOrEditDialogue.showAddOrEditDialogue();
+     //  addOrEditDialogue.showAddDialogue();
+        PatientAddOrEditDialogue dialogue = new PatientAddOrEditDialogue();
+        dialogue.showAddEditOrInfoDialogue(Mode.NEW, getSelectedPatient());
+        Optional<Patient> patientResult = dialogue.showAndWait();
 
         //Commented out example code from javafx dialogs official from code.makery.ch
         //result.ifPresent(name -> System.out.println("Your name: " + name));
@@ -146,8 +156,32 @@ public class PatientregisterController {
      */
     @FXML
     public void showEditPatientDialogue() {
+        PatientAddOrEditDialogue dialogue = new PatientAddOrEditDialogue();
+        Patient editPatient = getSelectedPatient();
+        if (editPatient == null) {
+            showNoSelectionDialogue();
+
+        } else {
+            dialogue.showAddEditOrInfoDialogue(Mode.EDIT, editPatient);
+            dialogue.showAndWait();
+
+        }
     }
 
+    @FXML
+    public void showPatientInformationDialogue() {
+        PatientAddOrEditDialogue dialogue = new PatientAddOrEditDialogue();
+        Patient infoPatient = getSelectedPatient();
+        if (infoPatient == null) {
+            showNoSelectionDialogue();
+
+        } else {
+            dialogue.setPatient(infoPatient);
+            dialogue.showAddEditOrInfoDialogue(Mode.INFO, infoPatient);
+            dialogue.showAndWait();
+        }
+
+    }
 
 
     /**

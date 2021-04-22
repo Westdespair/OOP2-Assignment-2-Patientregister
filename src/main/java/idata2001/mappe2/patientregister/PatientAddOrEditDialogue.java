@@ -7,38 +7,47 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class PatientAddOrEditDialogue extends Dialog<Patient> {
+public class PatientAddOrEditDialogue extends Dialog<Patient>{
+
+    //NEW, EDIT, or INFO
+    private Mode mode;
+    private Patient selectedPatient = null;
+
 
     public PatientAddOrEditDialogue() {
+        mode = null;
+
 
     }
 
     /**
-     * Shows the dialogue box for adding or editing a patient.
+     * Shows the dialogue box for adding, editing, or displaying the information of a patient.
      */
-        public void showAddOrEditDialogue() {
-        setTitle("Patient information");
-        getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        public void showAddEditOrInfoDialogue(Mode dialogueMode, Patient patient) {
+            setPatient(patient);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20,150,10,10));
+            setTitle("Patient information");
+            getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-        TextField firstName = new TextField();
-        firstName.setPromptText("First name");
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20,150,10,10));
 
-        TextField lastName = new TextField();
-        lastName.setPromptText("Last name");
+            TextField firstName = new TextField();
+            firstName.setPromptText("First name");
 
-        TextField socialSecurityNumber = new TextField();
-        socialSecurityNumber.setPromptText("Social security number");
+            TextField lastName = new TextField();
+            lastName.setPromptText("Last name");
 
-        TextField generalPractitioner = new TextField();
-        generalPractitioner.setPromptText("General practitioner");
+            TextField socialSecurityNumber = new TextField();
+            socialSecurityNumber.setPromptText("Social security number");
 
-        TextField diagnosis = new TextField();
-        diagnosis.setPromptText("Diagnosis");
+            TextField generalPractitioner = new TextField();
+            generalPractitioner.setPromptText("General practitioner");
+
+            TextField diagnosis = new TextField();
+            diagnosis.setPromptText("Diagnosis");
 
             grid.add(new Label("First name:"),0,0);
             grid.add(firstName,1,0);
@@ -54,10 +63,45 @@ public class PatientAddOrEditDialogue extends Dialog<Patient> {
 
             grid.add(new Label("Diagnosis:"),0,4);
             grid.add(diagnosis,1,4);
+            diagnosis.setMinHeight(250);
 
             getDialogPane().setContent(grid);
 
-            showAndWait();
+
+            //Alters the dialogue based on which type of dialogue is requested.
+            switch(dialogueMode) {
+                case INFO:
+                    case EDIT:
+                        firstName.setText(selectedPatient.getFirstName());
+                        lastName.setText(selectedPatient.getLastName());
+                        socialSecurityNumber.setText(selectedPatient.getLastName());
+                        generalPractitioner.setText(selectedPatient.getGeneralPractitioner());
+                        diagnosis.setText(selectedPatient.getDiagnosis());
+
+                        if(dialogueMode == Mode.INFO) {
+                            firstName.setEditable(false);
+                            lastName.setEditable(false);
+                            socialSecurityNumber.setEditable(false);
+                            generalPractitioner.setEditable(false);
+                            diagnosis.setEditable(false);
+                        }
+                    break;
+
+                case NEW:
+                    break;
+
+            }
+            }
+
+
+
+
+
+            /**
+             * Sets the current patient the dialogue will work with.
+             */
+        public void setPatient(Patient patient) {
+            this.selectedPatient = patient;
         }
     }
 
