@@ -7,14 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class PatientAddOrEditDialogue extends Dialog<Patient>{
+public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
     //NEW, EDIT, or INFO
     private Mode mode;
     private Patient selectedPatient = null;
 
 
-    public PatientAddOrEditDialogue() {
+    public PatientAddEditOrInfoDialogue() {
         mode = null;
 
 
@@ -74,7 +74,7 @@ public class PatientAddOrEditDialogue extends Dialog<Patient>{
                     case EDIT:
                         firstName.setText(selectedPatient.getFirstName());
                         lastName.setText(selectedPatient.getLastName());
-                        socialSecurityNumber.setText(selectedPatient.getLastName());
+                        socialSecurityNumber.setText(selectedPatient.getSocialSecurityNumber());
                         generalPractitioner.setText(selectedPatient.getGeneralPractitioner());
                         diagnosis.setText(selectedPatient.getDiagnosis());
 
@@ -88,10 +88,14 @@ public class PatientAddOrEditDialogue extends Dialog<Patient>{
                     break;
 
                 case NEW:
+                    Patient addedPatient = new Patient("","","","");
+                  //  return addedPatient;
                     break;
 
-            }
-            }
+                        }
+                    }
+
+
 
 
 
