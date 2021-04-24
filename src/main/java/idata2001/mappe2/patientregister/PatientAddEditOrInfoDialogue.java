@@ -22,10 +22,15 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
     /**
      * Shows the dialogue box for adding, editing, or displaying the information of a patient.
+     * @param dialogueMode Enum INFO, EDIT, or NEW.
+     *                     NEW: Makes a new patient.
+     *                     INFO: Only shows an infobox of the patients information.
+     *                     EDIT: Shows an editable infobox of the patients information.
      */
         public void showAddEditOrInfoDialogue(Mode dialogueMode, Patient patient) {
             setPatient(patient);
 
+            //Starts building the dialogue.
             setTitle("Patient information");
             getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 

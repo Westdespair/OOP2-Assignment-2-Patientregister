@@ -9,11 +9,19 @@ public class PatientList {
         patientList = new ArrayList<>();
     }
 
-public ArrayList<Patient> getPatientList() {
+    /**
+     *Returns the current list of patients the PatientList holds.
+     * @return patientList The current list of patients the instance of PatientList holds.
+     */
+    public ArrayList<Patient> getPatientList() {
     return this.patientList;
 }
 
-public void setPatientList(ArrayList<Patient> newPatientList) {
+    /**
+     * Takes in an arrayList, and makes that the new PatientList.
+     * @param newPatientList An ArrayList holding instances of the Patient class to replace the current ArrayList.
+     */
+    public void setPatientList(ArrayList<Patient> newPatientList) {
         this.patientList = newPatientList;
 }
 

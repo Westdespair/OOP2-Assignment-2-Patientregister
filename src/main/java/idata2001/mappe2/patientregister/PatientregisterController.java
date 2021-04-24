@@ -227,6 +227,7 @@ public class PatientregisterController {
      */
     @FXML
     public void importFile() throws IOException {
+        //Sets the current list of patients to a list chosen through the filechooser.
         appPatientList.setPatientList(csvReader.buildPatientListFromCSVList(csvReader.readFile(chooseFile())));
         showTables();
 

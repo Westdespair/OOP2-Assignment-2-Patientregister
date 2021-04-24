@@ -8,7 +8,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-
+/**
+ * A class designed for processing .CSV files with patient info. .
+ */
 public class CSVReader {
     BufferedReader reader;
 
@@ -26,6 +28,7 @@ public class CSVReader {
         public ArrayList<String> readFile(String fileName) throws IOException {
         ArrayList CSVLineList = new ArrayList<String>();
 
+        //Attempts to find the file based on the filename input.
             try {
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
             } catch (FileNotFoundException e) {
@@ -58,6 +61,7 @@ public class CSVReader {
     public ArrayList<Patient> buildPatientListFromCSVList(ArrayList<String> CSVLineList) {
         ArrayList<Patient> patientList = new ArrayList<>();
 
+        //Produces a patient from each line of the .CSV file.
         for (String CSVLine : CSVLineList) {
             patientList.add(producePatientFromCSVLine(CSVLine));
         }
@@ -71,6 +75,7 @@ public class CSVReader {
      * @return Patient a new patient based on the information read from the param line.
      */
     public Patient producePatientFromCSVLine (String CSVLine) {
+        //Splits strings at the semicolon.
         String[] splitStringList = CSVLine.split(";");
 
         return new Patient(splitStringList[0],splitStringList[1] , splitStringList[2], splitStringList[3]);
