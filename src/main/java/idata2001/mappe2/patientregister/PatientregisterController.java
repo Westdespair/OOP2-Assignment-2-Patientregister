@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class PatientregisterController {
@@ -227,12 +228,20 @@ public class PatientregisterController {
      */
     @FXML
     public void importFile() throws IOException {
-        //Sets the current list of patients to a list chosen through the filechooser.
-        appPatientList.setPatientList(csvReader.buildPatientListFromCSVList(csvReader.readFile(chooseFile())));
-        showTables();
+        // Sets the current list of patients to a list chosen through the filechooser.
+        String patientListFile = chooseFile();
 
+        // A valid file needs to be selected.
+        // If no .CSV file is selected, either through pressing the "cancel" button or crossing out the dialogue,
+        // nothing will happen.
+        if (patientListFile != null && !patientListFile.equals("")) {
+            //Creates the new "importedPatientList", reads the selected .CSV file, and converts it to a list of patients.
+            ArrayList <Patient> importedPatientList = csvReader.buildPatientListFromCSVList(csvReader.readFile(patientListFile));
+            appPatientList.setPatientList(importedPatientList);
+            showTables();
+        }
+        }
 
-    }
 
     /**
      * Refreshes the tableView.

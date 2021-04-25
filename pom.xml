@@ -6,7 +6,7 @@
 
     <groupId>no.ntnu.idata2001</groupId>
     <artifactId>Patientregister</artifactId>
-    <version>0.2.3-SNAPSHOT</version>
+    <version>0.2.4-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
