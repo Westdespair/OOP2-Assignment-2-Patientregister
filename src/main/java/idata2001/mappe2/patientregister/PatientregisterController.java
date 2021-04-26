@@ -78,20 +78,13 @@ public class PatientregisterController {
      */
     @FXML
     public void showAddPatientDialogue() {
-     //  addOrEditDialogue.showAddDialogue();
         PatientAddEditOrInfoDialogue dialogue = new PatientAddEditOrInfoDialogue();
         Patient addedPatient = new Patient("","","","");
         dialogue.showAddEditOrInfoDialogue(Mode.NEW, addedPatient);
 
-        appPatientList.getPatientList().add(addedPatient);
-
-
-        Optional<Patient> patientResult = dialogue.showAndWait();
-
-
-
-        //Commented out example code from javafx dialogs official from code.makery.ch
-        //result.ifPresent(name -> System.out.println("Your name: " + name));
+        dialogue.showAndWait();
+        appPatientList.getPatientList().add(dialogue.getPatient());
+        showTables();
     }
 
     /**

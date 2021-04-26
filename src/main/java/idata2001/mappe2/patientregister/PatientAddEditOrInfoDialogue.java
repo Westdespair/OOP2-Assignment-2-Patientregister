@@ -76,17 +76,17 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
 
             //Alters the dialogue based on which type of dialogue is requested.
-            switch(dialogueMode) {
-                case INFO:
-                    case EDIT:
-                        firstName.setText(selectedPatient.getFirstName());
-                        lastName.setText(selectedPatient.getLastName());
-                        socialSecurityNumber.setText(selectedPatient.getSocialSecurityNumber());
-                        generalPractitioner.setText(selectedPatient.getGeneralPractitioner());
-                        diagnosis.setText(selectedPatient.getDiagnosis());
+                        if (dialogueMode == Mode.INFO || dialogueMode == Mode.EDIT) {
+                            firstName.setText(selectedPatient.getFirstName());
+                            lastName.setText(selectedPatient.getLastName());
+                            socialSecurityNumber.setText(selectedPatient.getSocialSecurityNumber());
+                            generalPractitioner.setText(selectedPatient.getGeneralPractitioner());
+                            diagnosis.setText(selectedPatient.getDiagnosis());
+                        }
 
 
-                        if( dialogueMode == Mode.EDIT) {
+
+                        if( dialogueMode == Mode.EDIT || dialogueMode == Mode.NEW) {
                             firstName.textProperty().addListener((observable, oldValue, newValue) -> {
                                 if (newValue != null && !newValue.isBlank()) {
                                     selectedPatient.setFirstName(newValue);
@@ -127,15 +127,11 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                             diagnosis.setEditable(false);
 
                         }
-                    break;
 
-                case NEW:
-                    Patient addedPatient = new Patient("","","","");
-                  //  return addedPatient;
+                    if (dialogueMode == Mode.NEW) {
+                        Patient addedPatient = new Patient("", "", "", "");
 
-                    break;
-
-                        }
+                    }
 
                     }
 
@@ -150,6 +146,10 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
              */
         public void setPatient(Patient patient) {
             this.selectedPatient = patient;
+        }
+
+        public Patient getPatient() {
+            return this.selectedPatient;
         }
     }
 
