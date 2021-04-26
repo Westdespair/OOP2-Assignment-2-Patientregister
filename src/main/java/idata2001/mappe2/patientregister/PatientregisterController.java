@@ -174,6 +174,7 @@ public class PatientregisterController {
             dialogue.showAndWait();
 
         }
+        showTables();
     }
 
     @FXML
@@ -247,6 +248,7 @@ public class PatientregisterController {
      * Refreshes the tableView.
      */
     public void showTables() {
+        observablePatientList.removeAll(observablePatientList);
         this.observablePatientList = FXCollections.observableArrayList(this.appPatientList.getPatientList());
         this.patientTableView.setItems(this.observablePatientList);
 

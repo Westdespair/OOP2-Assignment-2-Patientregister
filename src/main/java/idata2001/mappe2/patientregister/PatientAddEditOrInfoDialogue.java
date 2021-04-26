@@ -1,10 +1,7 @@
 package idata2001.mappe2.patientregister;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
@@ -32,7 +29,12 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
             //Starts building the dialogue.
             setTitle("Patient information");
-            getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+            //The information dialogue only needs the ok button, as there is no action to cancel.
+            getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+            if(dialogueMode != Mode.INFO) {
+                getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+            }
 
             GridPane grid = new GridPane();
             grid.setHgap(10);
@@ -83,21 +85,58 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                         generalPractitioner.setText(selectedPatient.getGeneralPractitioner());
                         diagnosis.setText(selectedPatient.getDiagnosis());
 
+
+                        if( dialogueMode == Mode.EDIT) {
+                            firstName.textProperty().addListener((observable, oldValue, newValue) -> {
+                                if (newValue != null && !newValue.isBlank()) {
+                                    selectedPatient.setFirstName(newValue);
+                                }
+                            });
+
+                            lastName.textProperty().addListener((observable, oldValue, newValue) -> {
+                                if (newValue != null && !newValue.isBlank()) {
+                                    selectedPatient.setLastName(newValue);
+                                }
+                            });
+
+                            socialSecurityNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+                                if (newValue != null && !newValue.isBlank()) {
+                                    selectedPatient.setSocialSecurityNumber(newValue);
+                                }
+                            });
+
+                            generalPractitioner.textProperty().addListener((observable, oldValue, newValue) -> {
+                                if (newValue != null && !newValue.isBlank()) {
+                                    selectedPatient.setGeneralPractitioner(newValue);
+                                }
+                            });
+
+                            diagnosis.textProperty().addListener((observable, oldValue, newValue) -> {
+                                if (newValue != null && !newValue.isBlank()) {
+                                    selectedPatient.setDiagnosis(newValue);
+                                }
+                            });
+                        }
+
+
                         if(dialogueMode == Mode.INFO) {
                             firstName.setEditable(false);
                             lastName.setEditable(false);
                             socialSecurityNumber.setEditable(false);
                             generalPractitioner.setEditable(false);
                             diagnosis.setEditable(false);
+
                         }
                     break;
 
                 case NEW:
                     Patient addedPatient = new Patient("","","","");
                   //  return addedPatient;
+
                     break;
 
                         }
+
                     }
 
 
