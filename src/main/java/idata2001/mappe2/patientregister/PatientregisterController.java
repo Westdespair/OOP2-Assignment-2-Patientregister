@@ -80,7 +80,7 @@ public class PatientregisterController {
     public void showAddPatientDialogue() {
         PatientAddEditOrInfoDialogue dialogue = new PatientAddEditOrInfoDialogue();
         Patient addedPatient = new Patient("","","","");
-        dialogue.showAddEditOrInfoDialogue(Mode.NEW, addedPatient);
+        dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.NEW, addedPatient);
 
         dialogue.showAndWait();
         appPatientList.getPatientList().add(dialogue.getPatient());
@@ -163,7 +163,7 @@ public class PatientregisterController {
             showNoSelectionDialogue();
 
         } else {
-            dialogue.showAddEditOrInfoDialogue(Mode.EDIT, editPatient);
+            dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.EDIT, editPatient);
             dialogue.showAndWait();
 
         }
@@ -179,7 +179,7 @@ public class PatientregisterController {
 
         } else {
             dialogue.setPatient(infoPatient);
-            dialogue.showAddEditOrInfoDialogue(Mode.INFO, infoPatient);
+            dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.INFO, infoPatient);
             dialogue.showAndWait();
         }
 

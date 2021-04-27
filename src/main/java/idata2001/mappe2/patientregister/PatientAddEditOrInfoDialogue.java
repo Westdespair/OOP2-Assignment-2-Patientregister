@@ -10,6 +10,11 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
     private Mode mode;
     private Patient selectedPatient = null;
 
+    public enum Mode {
+        NEW, EDIT, INFO
+    }
+
+
 
     public PatientAddEditOrInfoDialogue() {
         mode = null;
