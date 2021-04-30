@@ -80,80 +80,68 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
             getDialogPane().setContent(grid);
 
 
-            //Alters the dialogue based on which type of dialogue is requested.
-                        if (dialogueMode == Mode.INFO || dialogueMode == Mode.EDIT) {
-                            firstName.setText(selectedPatient.getFirstName());
-                            lastName.setText(selectedPatient.getLastName());
-                            socialSecurityNumber.setText(selectedPatient.getSocialSecurityNumber());
-                            generalPractitioner.setText(selectedPatient.getGeneralPractitioner());
-                            diagnosis.setText(selectedPatient.getDiagnosis());
-                        }
+            //Alters the dialogue based on which type of dialogue mode is requested.
+            if (dialogueMode == Mode.INFO || dialogueMode == Mode.EDIT) {
+                firstName.setText(selectedPatient.getFirstName());
+                lastName.setText(selectedPatient.getLastName());
+                socialSecurityNumber.setText(selectedPatient.getSocialSecurityNumber());
+                generalPractitioner.setText(selectedPatient.getGeneralPractitioner());
+                diagnosis.setText(selectedPatient.getDiagnosis());
+            }
 
 
 
-                        if( dialogueMode == Mode.EDIT || dialogueMode == Mode.NEW) {
-                            firstName.textProperty().addListener((observable, oldValue, newValue) -> {
-                                if (newValue != null && !newValue.isBlank()) {
-                                    selectedPatient.setFirstName(newValue);
-                                }
-                            });
+            if( dialogueMode == Mode.EDIT || dialogueMode == Mode.NEW) {
+                firstName.textProperty().addListener((observable, oldValue, newValue) -> {
+                    selectedPatient.setFirstName(newValue);
+                });
 
-                            lastName.textProperty().addListener((observable, oldValue, newValue) -> {
-                                if (newValue != null && !newValue.isBlank()) {
-                                    selectedPatient.setLastName(newValue);
-                                }
-                            });
+                lastName.textProperty().addListener((observable, oldValue, newValue) -> {
+                    selectedPatient.setLastName(newValue);
+                });
 
-                            socialSecurityNumber.textProperty().addListener((observable, oldValue, newValue) -> {
-                                if (newValue != null && !newValue.isBlank()) {
-                                    selectedPatient.setSocialSecurityNumber(newValue);
-                                }
-                            });
+                socialSecurityNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+                    selectedPatient.setSocialSecurityNumber(newValue);
+                });
 
-                            generalPractitioner.textProperty().addListener((observable, oldValue, newValue) -> {
-                                if (newValue != null && !newValue.isBlank()) {
-                                    selectedPatient.setGeneralPractitioner(newValue);
-                                }
-                            });
+                generalPractitioner.textProperty().addListener((observable, oldValue, newValue) -> {
+                    selectedPatient.setGeneralPractitioner(newValue);
+                });
 
-                            diagnosis.textProperty().addListener((observable, oldValue, newValue) -> {
-                                if (newValue != null && !newValue.isBlank()) {
-                                    selectedPatient.setDiagnosis(newValue);
-                                }
-                            });
-                        }
+                diagnosis.textProperty().addListener((observable, oldValue, newValue) -> {
+                    selectedPatient.setDiagnosis(newValue);
+                });
+            }
 
 
-                        if(dialogueMode == Mode.INFO) {
-                            firstName.setEditable(false);
-                            lastName.setEditable(false);
-                            socialSecurityNumber.setEditable(false);
-                            generalPractitioner.setEditable(false);
-                            diagnosis.setEditable(false);
+            if(dialogueMode == Mode.INFO) {
+                firstName.setEditable(false);
+                lastName.setEditable(false);
+                socialSecurityNumber.setEditable(false);
+                generalPractitioner.setEditable(false);
+                diagnosis.setEditable(false);
 
-                        }
+            }
 
-                    if (dialogueMode == Mode.NEW) {
-                        Patient addedPatient = new Patient("", "", "", "");
+            if (dialogueMode == Mode.NEW) {
+                Patient addedPatient = new Patient("", "", "", "");
+            }
 
-                    }
+        }
 
-                    }
-
-
-
-
-
-
-
-            /**
-             * Sets the current patient the dialogue will work with.
-             */
+        /**
+         * Sets the current patient the dialogue will work with.
+         * @Param Patient the new selectedpatient
+         */
         public void setPatient(Patient patient) {
             this.selectedPatient = patient;
         }
 
-        public Patient getPatient() {
+    /**
+     * Returns the patient currently selected by the dialogue.
+     * @return Patient the patient the dialogue is currently holding.
+     */
+    public Patient getPatient() {
             return this.selectedPatient;
         }
     }
