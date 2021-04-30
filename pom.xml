@@ -6,7 +6,7 @@
 
     <groupId>no.ntnu.idata2001</groupId>
     <artifactId>Patientregister</artifactId>
-    <version>0.2.8-SNAPSHOT</version>
+    <version>0.2.9-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
@@ -61,6 +61,12 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 

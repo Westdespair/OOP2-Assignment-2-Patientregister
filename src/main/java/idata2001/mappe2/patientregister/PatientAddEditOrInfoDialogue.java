@@ -127,6 +127,7 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                 Patient addedPatient = new Patient("", "", "", "");
             }
 
+            showAndWait();
         }
 
         /**

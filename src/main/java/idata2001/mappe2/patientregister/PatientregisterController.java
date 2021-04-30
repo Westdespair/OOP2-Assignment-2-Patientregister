@@ -52,10 +52,12 @@ public class PatientregisterController {
 
         appPatientList = new PatientList();
         csvReader = new CSVReader();
+        addEditOrInfoDialogue = new PatientAddEditOrInfoDialogue();
+
+        //Initialize columns in the tableview.
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         socialSecurityNumberColumn.setCellValueFactory(new PropertyValueFactory<>("socialSecurityNumber"));
-        addEditOrInfoDialogue = new PatientAddEditOrInfoDialogue();
 
         //Test tableview functionality
         appPatientList.fillPatientListWithTestPatients();
@@ -74,7 +76,6 @@ public class PatientregisterController {
 
     /**
      * Creates a dialogue pane that allows us to fill in information and add a new patient to the table.
-     * TODO: Add functionality for actually receiving the inputs.
      */
     @FXML
     public void showAddPatientDialogue() {
@@ -82,8 +83,13 @@ public class PatientregisterController {
         Patient addedPatient = new Patient("","","","");
         dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.NEW, addedPatient);
 
-        dialogue.showAndWait();
-        appPatientList.getPatientList().add(dialogue.getPatient());
+       //dialogue.showAndWait();
+//        dialogue.showAndWait().ifPresent(response -> {
+//            if (response == ButtonType.OK) {
+//                appPatientList.getPatientList().add(dialogue.getPatient());
+//            }
+//        });
+      appPatientList.getPatientList().add(dialogue.getPatient());
         showTables();
     }
 
@@ -164,10 +170,8 @@ public class PatientregisterController {
 
         } else {
             dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.EDIT, editPatient);
-            dialogue.showAndWait();
-
+            showTables();
         }
-        showTables();
     }
 
     @FXML
@@ -180,7 +184,6 @@ public class PatientregisterController {
         } else {
             dialogue.setPatient(infoPatient);
             dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.INFO, infoPatient);
-            dialogue.showAndWait();
         }
 
     }
@@ -241,7 +244,7 @@ public class PatientregisterController {
      * Refreshes the tableView.
      */
     public void showTables() {
-        observablePatientList.removeAll(observablePatientList);
+        this.observablePatientList.removeAll(observablePatientList);
         this.observablePatientList = FXCollections.observableArrayList(this.appPatientList.getPatientList());
         this.patientTableView.setItems(this.observablePatientList);
 
