@@ -100,6 +100,17 @@ public class Patient {
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
+
+    /**
+     * Checks if any of the patients fields are filled. If there is only empty space or nothing, return true.
+     */
+    public boolean patientIsEmpty() {
+        boolean isEmpty = false;
+        if (firstName.isBlank() && lastName.isBlank() && socialSecurityNumber.isBlank() && generalPractitioner.isBlank() && diagnosis.isBlank()) {
+            isEmpty = true;
+        }
+        return isEmpty;
+    }
 }
 
 

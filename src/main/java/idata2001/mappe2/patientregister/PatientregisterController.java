@@ -80,12 +80,11 @@ public class PatientregisterController {
     @FXML
     public void showAddPatientDialogue() {
         PatientAddEditOrInfoDialogue dialogue = new PatientAddEditOrInfoDialogue();
-        Patient addedPatient = new Patient("","","","");
-     //   Optional<Patient> result = dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.NEW, addedPatient);
+        dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.NEW, null);
 
-        dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.NEW, addedPatient);
-
-        appPatientList.getPatientList().add(dialogue.getPatient());
+       if(dialogue.getPatient() != null && !dialogue.getPatient().patientIsEmpty()) {
+            appPatientList.getPatientList().add(dialogue.getPatient());
+        }
       showTables();
     }
 

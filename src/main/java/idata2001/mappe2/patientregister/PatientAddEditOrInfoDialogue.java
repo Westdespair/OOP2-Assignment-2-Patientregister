@@ -127,21 +127,23 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
                     System.out.println("User pressed OK");
 
-                    if (mode == Mode.EDIT) {
+                    if (dialogueMode == Mode.EDIT) {
                         result = selectedPatient;
                         System.out.println("User pressed edit and OK");
+                        selectedPatient.setFirstName(firstName.getText());
+                        selectedPatient.setLastName(lastName.getText());
+                        selectedPatient.setSocialSecurityNumber(socialSecurityNumber.getText());
+                        selectedPatient.setGeneralPractitioner(generalPractitioner.getText());
+                        selectedPatient.setDiagnosis(diagnosis.getText());
 
-                    } else if (mode == Mode.NEW) {
-                        result = new Patient("", "", "", "");
+                    } else if (dialogueMode == Mode.NEW) {
+
+                        result = new Patient(firstName.getText(), lastName.getText(), socialSecurityNumber.getText(), generalPractitioner.getText());
+                        result.setDiagnosis(diagnosis.getText());
+                        selectedPatient = result;
                         System.out.println("User pressed new and OK");
 
                     }
-
-                    selectedPatient.setFirstName(firstName.getText());
-                    selectedPatient.setLastName(lastName.getText());
-                    selectedPatient.setSocialSecurityNumber(socialSecurityNumber.getText());
-                    selectedPatient.setGeneralPractitioner(generalPractitioner.getText());
-                    selectedPatient.setDiagnosis(diagnosis.getText());
 
                 }
 
@@ -154,7 +156,7 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
         /**
          * Sets the current patient the dialogue will work with.
-         * @Param Patient the new selectedpatient
+         * @param patient Patient the new selectedpatient
          */
         public void setPatient(Patient patient) {
             this.selectedPatient = patient;
