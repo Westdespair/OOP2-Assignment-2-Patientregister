@@ -81,16 +81,12 @@ public class PatientregisterController {
     public void showAddPatientDialogue() {
         PatientAddEditOrInfoDialogue dialogue = new PatientAddEditOrInfoDialogue();
         Patient addedPatient = new Patient("","","","");
+     //   Optional<Patient> result = dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.NEW, addedPatient);
+
         dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.NEW, addedPatient);
 
-       //dialogue.showAndWait();
-//        dialogue.showAndWait().ifPresent(response -> {
-//            if (response == ButtonType.OK) {
-//                appPatientList.getPatientList().add(dialogue.getPatient());
-//            }
-//        });
-      appPatientList.getPatientList().add(dialogue.getPatient());
-        showTables();
+        appPatientList.getPatientList().add(dialogue.getPatient());
+      showTables();
     }
 
     /**

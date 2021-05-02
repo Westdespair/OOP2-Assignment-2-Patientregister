@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
+import java.util.Optional;
+
 public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
     //NEW, EDIT, or INFO
@@ -14,12 +16,8 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
         NEW, EDIT, INFO
     }
 
-
-
     public PatientAddEditOrInfoDialogue() {
         mode = null;
-
-
     }
 
     /**
@@ -37,14 +35,14 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
             //The information dialogue only needs the ok button, as there is no action to cancel.
             getDialogPane().getButtonTypes().addAll(ButtonType.OK);
-            if(dialogueMode != Mode.INFO) {
+            if (dialogueMode != Mode.INFO) {
                 getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
             }
 
             GridPane grid = new GridPane();
             grid.setHgap(10);
             grid.setVgap(10);
-            grid.setPadding(new Insets(20,150,10,10));
+            grid.setPadding(new Insets(20, 150, 10, 10));
 
             TextField firstName = new TextField();
             firstName.setPromptText("First name");
@@ -61,21 +59,21 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
             TextField diagnosis = new TextField();
             diagnosis.setPromptText("Diagnosis");
 
-            grid.add(new Label("First name:"),0,0);
-            grid.add(firstName,1,0);
+            grid.add(new Label("First name:"), 0, 0);
+            grid.add(firstName, 1, 0);
 
-            grid.add(new Label("Last name:"),0,1);
-            grid.add(lastName,1,1);
+            grid.add(new Label("Last name:"), 0, 1);
+            grid.add(lastName, 1, 1);
 
-            grid.add(new Label("Social security number:"),0,2);
-            grid.add(socialSecurityNumber,1,2);
+            grid.add(new Label("Social security number:"), 0, 2);
+            grid.add(socialSecurityNumber, 1, 2);
 
-            grid.add(new Label("General practitioner:"),0,3);
-            grid.add(generalPractitioner,1,3);
+            grid.add(new Label("General practitioner:"), 0, 3);
+            grid.add(generalPractitioner, 1, 3);
 
-            grid.add(new Label("Diagnosis:"),0,4);
-            grid.add(diagnosis,1,4);
-            diagnosis.setMinHeight(250);
+            grid.add(new Label("Diagnosis:"), 0, 4);
+            grid.add(diagnosis, 1, 4);
+//            diagnosis.setMinHeight(250);
 
             getDialogPane().setContent(grid);
 
@@ -89,32 +87,7 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                 diagnosis.setText(selectedPatient.getDiagnosis());
             }
 
-
-
-            if( dialogueMode == Mode.EDIT || dialogueMode == Mode.NEW) {
-                firstName.textProperty().addListener((observable, oldValue, newValue) -> {
-                    selectedPatient.setFirstName(newValue);
-                });
-
-                lastName.textProperty().addListener((observable, oldValue, newValue) -> {
-                    selectedPatient.setLastName(newValue);
-                });
-
-                socialSecurityNumber.textProperty().addListener((observable, oldValue, newValue) -> {
-                    selectedPatient.setSocialSecurityNumber(newValue);
-                });
-
-                generalPractitioner.textProperty().addListener((observable, oldValue, newValue) -> {
-                    selectedPatient.setGeneralPractitioner(newValue);
-                });
-
-                diagnosis.textProperty().addListener((observable, oldValue, newValue) -> {
-                    selectedPatient.setDiagnosis(newValue);
-                });
-            }
-
-
-            if(dialogueMode == Mode.INFO) {
+            if (dialogueMode == Mode.INFO) {
                 firstName.setEditable(false);
                 lastName.setEditable(false);
                 socialSecurityNumber.setEditable(false);
@@ -123,11 +96,60 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
             }
 
-            if (dialogueMode == Mode.NEW) {
-                Patient addedPatient = new Patient("", "", "", "");
+            if (dialogueMode == Mode.EDIT || dialogueMode == Mode.NEW) {
+                firstName.textProperty().addListener((observable, oldValue, newValue) -> {
+                    firstName.setText(newValue);
+                });
+
+                lastName.textProperty().addListener((observable, oldValue, newValue) -> {
+                    lastName.setText(newValue);
+                });
+
+                socialSecurityNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+                    socialSecurityNumber.setText(newValue);
+                });
+
+                generalPractitioner.textProperty().addListener((observable, oldValue, newValue) -> {
+                    generalPractitioner.setText(newValue);
+                });
+
+                diagnosis.textProperty().addListener((observable, oldValue, newValue) -> {
+                    diagnosis.setText(newValue);
+                    diagnosis.autosize();
+
+                });
             }
 
+
+            setResultConverter((ButtonType button) -> {
+                Patient result = null;
+                if (button == ButtonType.OK) {
+
+                    System.out.println("User pressed OK");
+
+                    if (mode == Mode.EDIT) {
+                        result = selectedPatient;
+                        System.out.println("User pressed edit and OK");
+
+                    } else if (mode == Mode.NEW) {
+                        result = new Patient("", "", "", "");
+                        System.out.println("User pressed new and OK");
+
+                    }
+
+                    selectedPatient.setFirstName(firstName.getText());
+                    selectedPatient.setLastName(lastName.getText());
+                    selectedPatient.setSocialSecurityNumber(socialSecurityNumber.getText());
+                    selectedPatient.setGeneralPractitioner(generalPractitioner.getText());
+                    selectedPatient.setDiagnosis(diagnosis.getText());
+
+                }
+
+                return result;
+
+            });
             showAndWait();
+
         }
 
         /**
