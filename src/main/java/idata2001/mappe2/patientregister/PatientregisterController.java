@@ -19,6 +19,7 @@ public class PatientregisterController {
     private final String appVersion = " FIX ME LATER";
     private PatientList appPatientList;
     private CSVReader csvReader;
+    private CSVWriter csvWriter;
     private PatientAddEditOrInfoDialogue addEditOrInfoDialogue;
 
     @FXML
@@ -48,10 +49,11 @@ public class PatientregisterController {
     /**
      * Initializes the patientregistercontroller.
      */
-    public void initialize() {
+    public void initialize() throws IOException {
 
         appPatientList = new PatientList();
         csvReader = new CSVReader();
+        csvWriter = new CSVWriter();
         addEditOrInfoDialogue = new PatientAddEditOrInfoDialogue();
 
         //Initialize columns in the tableview.
@@ -234,6 +236,22 @@ public class PatientregisterController {
         }
         }
 
+    /**
+     * Allows the user to choose a file location and save the contents of their table to a .CSV file on said location.
+     */
+    @FXML
+        public void exportFile() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".CSV file", "*.csv"));
+        fileChooser.setTitle("Select export location");
+        fileChooser.setInitialFileName("patientList");
+
+        File newFilePath = fileChooser.showSaveDialog((Stage) editPatientButton.getScene().getWindow());
+        System.out.println(newFilePath);
+
+        csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
+
+        }
 
     /**
      * Refreshes the tableView.

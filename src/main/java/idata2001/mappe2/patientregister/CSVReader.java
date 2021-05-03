@@ -75,10 +75,19 @@ public class CSVReader {
      * @return Patient a new patient based on the information read from the param line.
      */
     public Patient producePatientFromCSVLine (String CSVLine) {
+        int listLengthWithDiagnosis = 5;
+
         //Splits strings at the semicolon.
         String[] splitStringList = CSVLine.split(";");
 
-        return new Patient(splitStringList[0],splitStringList[1] , splitStringList[2], splitStringList[3]);
+        Patient readPatient = new Patient(splitStringList[0],splitStringList[1] , splitStringList[2], splitStringList[3]);
+
+        //If the length of the list is 5, that means the file also contains a diagnosis field.
+        //This needs to be accounted for.
+        if (splitStringList.length == listLengthWithDiagnosis) {
+            readPatient.setDiagnosis(splitStringList[4]);
+        }
+        return readPatient;
         }
 
 
