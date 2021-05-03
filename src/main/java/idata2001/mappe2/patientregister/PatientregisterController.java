@@ -17,6 +17,7 @@ public class PatientregisterController {
 
     private ObservableList<Patient> observablePatientList;
     private final String appVersion = " FIX ME LATER";
+    private String currentPath;
     private PatientList appPatientList;
     private CSVReader csvReader;
     private CSVWriter csvWriter;
@@ -55,6 +56,7 @@ public class PatientregisterController {
         csvReader = new CSVReader();
         csvWriter = new CSVWriter();
         addEditOrInfoDialogue = new PatientAddEditOrInfoDialogue();
+        currentPath = null;
 
         //Initialize columns in the tableview.
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -232,6 +234,7 @@ public class PatientregisterController {
             //Creates the new "importedPatientList", reads the selected .CSV file, and converts it to a list of patients.
             ArrayList <Patient> importedPatientList = csvReader.buildPatientListFromCSVList(csvReader.readFile(patientListFile));
             appPatientList.setPatientList(importedPatientList);
+            currentPath = patientListFile;
             showTables();
         }
         }
@@ -248,10 +251,24 @@ public class PatientregisterController {
 
         File newFilePath = fileChooser.showSaveDialog((Stage) editPatientButton.getScene().getWindow());
         System.out.println(newFilePath);
+        currentPath = newFilePath.getAbsolutePath();
 
         csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
 
+    }
+
+    /**
+     * Saves the file to the already established file path. If there is none, the path has to be selected manually.
+     * @throws IOException
+     */
+    @FXML
+    public void saveFile() throws IOException {
+        if (currentPath != null) {
+            csvWriter.convertPatientArrayToCSVFile(appPatientList, currentPath);
+        } else {
+            exportFile();
         }
+    }
 
     /**
      * Refreshes the tableView.
