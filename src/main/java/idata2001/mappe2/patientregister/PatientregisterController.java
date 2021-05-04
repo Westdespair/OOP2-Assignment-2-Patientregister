@@ -121,6 +121,7 @@ public class PatientregisterController {
         }
         refreshTables();
     }
+
     /**
      * Starts a confirmation dialogue.
      * Exits the application if OK is selected, does nothing if CANCEL is selected.
@@ -193,9 +194,7 @@ public class PatientregisterController {
             dialogue.setPatient(infoPatient);
             dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.INFO, infoPatient);
         }
-
     }
-
 
     /**
      * ALlows the user to choose a .CSV file through file browser and returns the files path.
@@ -223,7 +222,6 @@ public class PatientregisterController {
         } else {
             selectedFilePath = selectedFile.getAbsolutePath();
         }
-
         System.out.println(selectedFilePath);
             return selectedFilePath;
     }
@@ -247,7 +245,7 @@ public class PatientregisterController {
             currentPath = patientListFile;
             refreshTables();
         }
-        }
+    }
 
     /**
      * Allows the user to choose a file location and save the contents of their table to a .CSV file on said location.
@@ -264,7 +262,6 @@ public class PatientregisterController {
         currentPath = newFilePath.getAbsolutePath();
 
         csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
-
     }
 
     /**
@@ -288,7 +285,6 @@ public class PatientregisterController {
         this.observablePatientList.removeAll(observablePatientList);
         this.observablePatientList = FXCollections.observableArrayList(this.appPatientList.getPatientList());
         this.patientTableView.setItems(this.observablePatientList);
-
     }
 
     /**
@@ -314,6 +310,4 @@ public class PatientregisterController {
         noSelectionAlert.setContentText("You need to select a patient by highlighting them in the table.");
         noSelectionAlert.show();
     }
-
-
 }
