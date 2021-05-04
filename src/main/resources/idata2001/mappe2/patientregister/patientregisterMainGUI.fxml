@@ -33,7 +33,7 @@
                   <items>
                         <MenuItem fx:id="importCSVFileMenuItem" mnemonicParsing="false" onAction="#importFile" text="Import from .CSV" />
                         <MenuItem fx:id="importCSVFileMenuItem1" mnemonicParsing="false" onAction="#saveFile" text="Save" />
-                    <MenuItem fx:id="exportCSVFileMenuItem" mnemonicParsing="false" onAction="#exportFile" text="Save As..." />
+                    <MenuItem fx:id="exportCSVFileMenuItem" mnemonicParsing="false" onAction="#saveFileAtSelectedPath" text="Save As..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem fx:id="exitProgramMenuItem" mnemonicParsing="false" onAction="#showCloseApplicationDialogue" text="Exit" />
                   </items>

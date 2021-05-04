@@ -6,6 +6,9 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Optional;
 
+/**
+ * A custom dialogue with functionality for editing or viewing patients, or creating new ones altogether.
+ */
 public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
     //NEW, EDIT, or INFO
@@ -39,6 +42,8 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                 getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
             }
 
+
+            //Initializes the textfields of the dialogue
             GridPane grid = new GridPane();
             grid.setHgap(10);
             grid.setVgap(10);
@@ -73,12 +78,10 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
             grid.add(new Label("Diagnosis:"), 0, 4);
             grid.add(diagnosis, 1, 4);
-//            diagnosis.setMinHeight(250);
 
             getDialogPane().setContent(grid);
 
-
-            //Alters the dialogue based on which type of dialogue mode is requested.
+            //Gets the existing information about the patient and fills it in the relevant textfields.
             if (dialogueMode == Mode.INFO || dialogueMode == Mode.EDIT) {
                 firstName.setText(selectedPatient.getFirstName());
                 lastName.setText(selectedPatient.getLastName());
@@ -87,6 +90,7 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                 diagnosis.setText(selectedPatient.getDiagnosis());
             }
 
+            //The info version of the dialogue is not editable, it can only be read.
             if (dialogueMode == Mode.INFO) {
                 firstName.setEditable(false);
                 lastName.setEditable(false);
@@ -96,6 +100,7 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
 
             }
 
+            //Adds listeners for the editable dialogues.
             if (dialogueMode == Mode.EDIT || dialogueMode == Mode.NEW) {
                 firstName.textProperty().addListener((observable, oldValue, newValue) -> {
                     firstName.setText(newValue);
@@ -120,13 +125,13 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                 });
             }
 
-
+            //Allows the application to only apply the filled in information to the patient if the "OK" button is pressed.
             setResultConverter((ButtonType button) -> {
                 Patient result = null;
                 if (button == ButtonType.OK) {
-
                     System.out.println("User pressed OK");
 
+                    //Edits the existing information about the selected patient if the mode is set to edit.
                     if (dialogueMode == Mode.EDIT) {
                         result = selectedPatient;
                         System.out.println("User pressed edit and OK");
@@ -136,22 +141,17 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
                         selectedPatient.setGeneralPractitioner(generalPractitioner.getText());
                         selectedPatient.setDiagnosis(diagnosis.getText());
 
+                    //Creates a new patient and applies the filled in information if the mode is new.
                     } else if (dialogueMode == Mode.NEW) {
-
                         result = new Patient(firstName.getText(), lastName.getText(), socialSecurityNumber.getText(), generalPractitioner.getText());
                         result.setDiagnosis(diagnosis.getText());
                         selectedPatient = result;
                         System.out.println("User pressed new and OK");
-
                     }
-
                 }
-
                 return result;
-
             });
             showAndWait();
-
         }
 
         /**
@@ -169,5 +169,5 @@ public class PatientAddEditOrInfoDialogue extends Dialog<Patient>{
     public Patient getPatient() {
             return this.selectedPatient;
         }
-    }
+}
 

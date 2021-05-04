@@ -2,6 +2,9 @@ package idata2001.mappe2.patientregister;
 
 import java.util.ArrayList;
 
+/**
+ * Holds instances of the Patient class.
+ */
 public class PatientList {
     private ArrayList<Patient> patientList;
 

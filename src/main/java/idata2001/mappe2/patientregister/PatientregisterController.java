@@ -11,8 +11,11 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
+/**
+ * Controls the functionality of the user interface.
+ * Allows for functionality based on editing, importing, exporting .CSV files containing information about Patient instances.
+ */
 public class PatientregisterController {
 
     private ObservableList<Patient> observablePatientList;
@@ -64,13 +67,15 @@ public class PatientregisterController {
         socialSecurityNumberColumn.setCellValueFactory(new PropertyValueFactory<>("socialSecurityNumber"));
 
         //Test tableview functionality
+        //TODO: Remove this method call in the final update.
         appPatientList.fillPatientListWithTestPatients();
 
-
+        //Sets the list for the tableview as the internal list of the controller.
         this.observablePatientList =
                 FXCollections.observableArrayList(this.appPatientList.getPatientList());
         this.patientTableView.setItems(this.observablePatientList);
 
+        //Adds functionality for double-click selections.
         this.patientTableView.setOnMousePressed(mouseEvent -> {
             if (mouseEvent.isPrimaryButtonDown() && (mouseEvent.getClickCount() == 2)) {
                 this.showPatientInformationDialogue();
@@ -89,7 +94,7 @@ public class PatientregisterController {
        if(dialogue.getPatient() != null && !dialogue.getPatient().patientIsEmpty()) {
             appPatientList.getPatientList().add(dialogue.getPatient());
         }
-      showTables();
+      refreshTables();
     }
 
     /**
@@ -107,13 +112,14 @@ public class PatientregisterController {
             alert.setHeaderText("Delete confirmation");
             alert.setContentText("Are you sure you want to delete this patient?");
 
+            //Removes the selected patient if OK is pressed.
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     appPatientList.getPatientList().remove(deletePatient);
                 }
             });
         }
-        showTables();
+        refreshTables();
     }
     /**
      * Starts a confirmation dialogue.
@@ -157,8 +163,8 @@ public class PatientregisterController {
     }
 
     /**
-     * Shows a dialogue allowing edits to a selected patient.
-     * TODO: Add a dialogue and start functionality on this method.
+     * Shows a dialogue allowing edits to the selected patient.
+     * If there is no selection, show a dialogue explaining this.
      */
     @FXML
     public void showEditPatientDialogue() {
@@ -169,10 +175,13 @@ public class PatientregisterController {
 
         } else {
             dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.EDIT, editPatient);
-            showTables();
+            refreshTables();
         }
     }
 
+    /**
+     * Shows all the information available on the patient in an uneditable dialogue.
+     */
     @FXML
     public void showPatientInformationDialogue() {
         PatientAddEditOrInfoDialogue dialogue = new PatientAddEditOrInfoDialogue();
@@ -189,9 +198,9 @@ public class PatientregisterController {
 
 
     /**
-     * ALlows the user to choose a .CSV file with the file browser, and returns the files path.
-     * Successfully returns the file at this point. TODO: Open the file and put it in the table on import.
-     * @return FILE the chosen file.
+     * ALlows the user to choose a .CSV file through file browser and returns the files path.
+     * If no file is selected, do nothing.
+     * * @return File the chosen file.
      */
     @FXML
     public String chooseFile() {
@@ -220,7 +229,8 @@ public class PatientregisterController {
     }
 
     /**
-     * Allows the user to choose a file through the filechooser. Displays the file in the programs tableview.
+     * Allows the user to select a .CSV file through the file browser.
+     * Imports the file to the tableview of the application.
      */
     @FXML
     public void importFile() throws IOException {
@@ -235,7 +245,7 @@ public class PatientregisterController {
             ArrayList <Patient> importedPatientList = csvReader.buildPatientListFromCSVList(csvReader.readFile(patientListFile));
             appPatientList.setPatientList(importedPatientList);
             currentPath = patientListFile;
-            showTables();
+            refreshTables();
         }
         }
 
@@ -243,7 +253,7 @@ public class PatientregisterController {
      * Allows the user to choose a file location and save the contents of their table to a .CSV file on said location.
      */
     @FXML
-        public void exportFile() throws IOException {
+        public void saveFileAtSelectedPath() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".CSV file", "*.csv"));
         fileChooser.setTitle("Select export location");
@@ -258,7 +268,8 @@ public class PatientregisterController {
     }
 
     /**
-     * Saves the file to the already established file path. If there is none, the path has to be selected manually.
+     * Saves the file to the already established file path.
+     * If there is none, the path has to be selected manually through the filebrowser
      * @throws IOException
      */
     @FXML
@@ -266,14 +277,14 @@ public class PatientregisterController {
         if (currentPath != null) {
             csvWriter.convertPatientArrayToCSVFile(appPatientList, currentPath);
         } else {
-            exportFile();
+            saveFileAtSelectedPath();
         }
     }
 
     /**
-     * Refreshes the tableView.
+     * Refreshes the tableView in the user interface.
      */
-    public void showTables() {
+    public void refreshTables() {
         this.observablePatientList.removeAll(observablePatientList);
         this.observablePatientList = FXCollections.observableArrayList(this.appPatientList.getPatientList());
         this.patientTableView.setItems(this.observablePatientList);
@@ -293,6 +304,9 @@ public class PatientregisterController {
        return selectedPatient;
     }
 
+    /**
+     * Shows a dialogue informing that no selection has been made.
+     */
     public void showNoSelectionDialogue() {
         Alert noSelectionAlert = new Alert(Alert.AlertType.INFORMATION);
         noSelectionAlert.setTitle("No patient selected");
