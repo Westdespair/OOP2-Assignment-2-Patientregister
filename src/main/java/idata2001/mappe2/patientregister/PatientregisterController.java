@@ -23,15 +23,6 @@ public class PatientregisterController {
     private Button editPatientButton;
 
     @FXML
-    private Button removePatientButton;
-
-    @FXML
-    private Button addPatientButton;
-
-    @FXML
-    private MenuItem aboutButton;
-
-    @FXML
     private TableView<Patient> patientTableView;
 
     @FXML
@@ -43,16 +34,14 @@ public class PatientregisterController {
     @FXML
     private TableColumn<String, String> socialSecurityNumberColumn;
 
-
     private ObservableList<Patient> observablePatientList;
-    private final String appVersion = " FIX ME LATER";
+    private final String appVersion = "0.2.20";
     private String currentPath;
     private PatientList appPatientList;
     private CSVReader csvReader;
     private CSVWriter csvWriter;
     private PatientAddEditOrInfoDialogue addEditOrInfoDialogue;
     private boolean recentlySaved;
-
 
     /**
      * Initializes the patientregistercontroller.
@@ -84,7 +73,7 @@ public class PatientregisterController {
     }
 
     /**
-     * Creates a dialogue pane that allows us to fill in information and add a new patient to the table.
+     * Creates a dialogue pane that allows the user to fill in information and add a new patient to the table.
      */
     @FXML
     public void showAddPatientDialogue() {
@@ -136,6 +125,7 @@ public class PatientregisterController {
         if (isRecentlySaved()) {
             stage.close();
 
+        //If the program has not been saved recently, show a dialogue allowing the user to save.
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Save on exit?");
@@ -170,19 +160,17 @@ public class PatientregisterController {
 
     /**
      * Shows information about the patientregister app.
-     * TODO: Make the method show current build version and build release date.
      */
     @FXML
     public void showProgramInformationDialogue() {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.setTitle("About this application");
-        info.setHeaderText("Patientregister"
+        info.setHeaderText("Patient Register"
                 + "Version " + appVersion );
 
         info.setContentText("Created for IDATA2001/NTNU by \n"
                 + "Sindre Skorpen | @westdespair\n"
                 + "2021");
-
         info.showAndWait();
     }
 

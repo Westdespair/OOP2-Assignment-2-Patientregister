@@ -10,9 +10,6 @@ import java.util.ArrayList;
 public class CSVReader {
     BufferedReader reader;
 
-    public CSVReader(){
-        }
-
     /**
      *
      * @param fileName The absolute path to a file.
@@ -23,7 +20,6 @@ public class CSVReader {
         ArrayList CSVLineList = new ArrayList<String>();
 
         //Attempts to find the file based on the filename input.
-
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
 
@@ -80,10 +76,7 @@ public class CSVReader {
         if (splitStringList.length >= listLengthWithDiagnosis) {
             readPatient.setDiagnosis(splitStringList[4]);
         }
-        return readPatient;
-        }
-
-
-
+    return readPatient;
+    }
 }
 

@@ -9,9 +9,6 @@ import java.io.IOException;
  */
 public class CSVWriter {
 
-    public CSVWriter() throws IOException {
-    }
-
     /**
      *
      * @param patientList The list the patients should be retrieved from.

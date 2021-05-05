@@ -43,7 +43,5 @@ public class PatientList {
 
         getPatientList().add(new Patient("Toon","Boom"
             ,"Francis Rohin","1"));
-
-
-}
+    }
 }

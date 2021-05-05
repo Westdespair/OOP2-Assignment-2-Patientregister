@@ -20,7 +20,7 @@ public class PatientregisterClient extends Application {
                 //new PatientregisterController();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("patientregisterMainGUI.fxml"));
         Parent root = fxmlLoader.load();
-        controller = (PatientregisterController)fxmlLoader.getController() ;
+        controller = fxmlLoader.getController() ;
         appStage.setTitle("Patientregister");
 
         //Starts the new scene and sets an initial size.
@@ -30,14 +30,13 @@ public class PatientregisterClient extends Application {
 
         //Opens a dialogue ensuring that the user is aware of their save situation before exiting the application.
         appStage.setOnCloseRequest(e -> {
-                   try {
-                       if (controller.closeApplication()){
-                           e.consume();
-
-                       }
-                   } catch (IOException ioException) {
-                       ioException.printStackTrace();
-                   }
+            try {
+                if (controller.closeApplication()){
+                    e.consume();
+                }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
     }
 }
