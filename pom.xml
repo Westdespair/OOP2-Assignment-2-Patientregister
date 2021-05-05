@@ -6,7 +6,7 @@
 
     <groupId>no.ntnu.idata2001</groupId>
     <artifactId>Patientregister</artifactId>
-    <version>0.2.17-SNAPSHOT</version>
+    <version>0.2.18-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
@@ -49,6 +49,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.7.0</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

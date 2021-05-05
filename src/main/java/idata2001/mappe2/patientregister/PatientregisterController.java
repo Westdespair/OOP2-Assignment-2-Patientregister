@@ -143,8 +143,8 @@ public class PatientregisterController {
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Save on exit?");
-            alert.setHeaderText("Do you want to save your progress before exiting?");
-            alert.setContentText("Unsaved progress can be lost.");
+            alert.setHeaderText("You have unsaved changes in your register!");
+            alert.setContentText("Do you want to save your progress before exiting?");
 
             //Establishes the different buttons of the dialogue
             ButtonType buttonTypeYes = new ButtonType("Yes");
@@ -286,17 +286,18 @@ public class PatientregisterController {
         fileChooser.setInitialFileName("patientList");
 
         File newFilePath = fileChooser.showSaveDialog((Stage) editPatientButton.getScene().getWindow());
-        System.out.println(newFilePath);
-        currentPath = newFilePath.getAbsolutePath();
+            System.out.println(newFilePath);
+            currentPath = newFilePath.getAbsolutePath();
 
-        if (!currentPath.endsWith(".csv")) {
-            showWrongFileTypeDialogue();
-            currentPath = null;
+            //The file needs to end with .csv to be written properly.
+            if (!currentPath.endsWith(".csv")) {
+                showWrongFileTypeDialogue();
+                currentPath = null;
 
-        } else {
-            csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
-            validateRecentlySavedStatus();
-        }
+            } else {
+                csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
+                validateRecentlySavedStatus();
+            }
     }
 
     /**
