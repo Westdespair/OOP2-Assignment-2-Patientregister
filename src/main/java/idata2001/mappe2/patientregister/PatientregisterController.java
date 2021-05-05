@@ -358,14 +358,24 @@ public class PatientregisterController {
         wrongFileTypeAlert.show();
     }
 
+    /**
+     * Invalidates that the file has been recently saved.
+     */
     public void invalidateRecentlySavedStatus() {
         this.recentlySaved = false;
     }
 
+    /**
+     * Validates that the file has been recently saved.
+     */
     public void validateRecentlySavedStatus() {
         this.recentlySaved = true;
     }
 
+    /**
+     * Returns whether or not the file has been saved recently.
+     * @return recentlySaved Boolean whether or not the file has recently been saved.
+     */
     public boolean isRecentlySaved() {
         return this.recentlySaved;
     }

@@ -1,26 +1,38 @@
 package idata2001.mappe2.patientregister;
 
-public class PatientGUIFactory implements GUIfactory {
+import javafx.scene.Node;
 
-    @Override
-    public void getScene() {
+public class PatientGUIFactory //implements GUIfactory
+ {
 
-    }
+     public static void main(String[] args) {
+         GUIfactory guiFactory = new GUIfactory();
 
-    @Override
-    public void getTable() {
+         Node hBox = guiFactory.HBox();
+         Node vBox = guiFactory.VBox();
+         Node menuBar = guiFactory.MenuBar();
+     }
 
-    }
-
-    @Override
-    public void getButtons() {
-
-    }
-
-    @Override
-    public void get() {
-
-    }
+//
+//    @Override
+//    public void getScene() {
+//
+//    }
+//
+//    @Override
+//    public void getTable() {
+//
+//    }
+//
+//    @Override
+//    public void getButtons() {
+//
+//    }
+//
+//    @Override
+//    public void get() {
+//
+//    }
 
 }
 
