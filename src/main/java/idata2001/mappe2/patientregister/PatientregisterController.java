@@ -11,20 +11,13 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Controls the functionality of the user interface.
  * Allows for functionality based on editing, importing, exporting .CSV files containing information about Patient instances.
  */
 public class PatientregisterController {
-
-    private ObservableList<Patient> observablePatientList;
-    private final String appVersion = " FIX ME LATER";
-    private String currentPath;
-    private PatientList appPatientList;
-    private CSVReader csvReader;
-    private CSVWriter csvWriter;
-    private PatientAddEditOrInfoDialogue addEditOrInfoDialogue;
 
     @FXML
     private Button editPatientButton;
@@ -50,16 +43,27 @@ public class PatientregisterController {
     @FXML
     private TableColumn<String, String> socialSecurityNumberColumn;
 
+
+    private ObservableList<Patient> observablePatientList;
+    private final String appVersion = " FIX ME LATER";
+    private String currentPath;
+    private PatientList appPatientList;
+    private CSVReader csvReader;
+    private CSVWriter csvWriter;
+    private PatientAddEditOrInfoDialogue addEditOrInfoDialogue;
+    private boolean recentlySaved;
+
+
     /**
      * Initializes the patientregistercontroller.
      */
     public void initialize() throws IOException {
-
         appPatientList = new PatientList();
         csvReader = new CSVReader();
         csvWriter = new CSVWriter();
         addEditOrInfoDialogue = new PatientAddEditOrInfoDialogue();
         currentPath = null;
+        validateRecentlySavedStatus();
 
         //Initialize columns in the tableview.
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -93,6 +97,7 @@ public class PatientregisterController {
 
        if(dialogue.getPatient() != null && !dialogue.getPatient().patientIsEmpty()) {
             appPatientList.getPatientList().add(dialogue.getPatient());
+            invalidateRecentlySavedStatus();
         }
       refreshTables();
     }
@@ -116,6 +121,7 @@ public class PatientregisterController {
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     appPatientList.getPatientList().remove(deletePatient);
+                    invalidateRecentlySavedStatus();
                 }
             });
         }
@@ -123,27 +129,48 @@ public class PatientregisterController {
     }
 
     /**
-     * Starts a confirmation dialogue.
-     * Exits the application if OK is selected, does nothing if CANCEL is selected.
-     * TODO: Only ask for exit confirmation if there is progress to lose on the file.
+     * Closes the application if the current file has been saved recently.
+     * If not, asks the customer to either save, go back, or acknowledge that the data will be lost on exit.
+     * @return isCancelled Boolean tells if the user pressed cancel or not.
      */
     @FXML
-    public void showCloseApplicationDialogue() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit application");
-        alert.setHeaderText("Exit confirmation");
-        alert.setContentText("Are you sure you want to exit? Unexported progress will be lost.");
+    public boolean closeApplication() throws IOException {
+        boolean isCancelled = false;
         Stage stage = (Stage) editPatientButton.getScene().getWindow();
+        if (isRecentlySaved()) {
+            stage.close();
 
-        //Shows the alert and waits for a response.
-        //If the OK button is pressed, close the application. If anything else is pressed, do nothing.
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                //CLOSE IT DOWN
-                stage.close();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Save on exit?");
+            alert.setHeaderText("Do you want to save your progress before exiting?");
+            alert.setContentText("Unsaved progress can be lost.");
+
+            //Establishes the different buttons of the dialogue
+            ButtonType buttonTypeYes = new ButtonType("Yes");
+            ButtonType buttonTypeNo = new ButtonType("No");
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+
+            //Opens the dialogue and waits for a button to be selected.
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent()) {
+                //If the user selects the yes button, save the file.
+                if (result.get() == buttonTypeYes) {
+                    saveFile();
+                }
+
+                //If the user selects anything but cancel, the program will close at this point.
+                if(result.get() == buttonTypeCancel) {
+                    isCancelled = true;
+                } else {
+                    stage.close();
+                }
             }
-        });
+        }
+        return isCancelled;
     }
+
 
     /**
      * Shows information about the patientregister app.
@@ -176,6 +203,7 @@ public class PatientregisterController {
 
         } else {
             dialogue.showAddEditOrInfoDialogue(PatientAddEditOrInfoDialogue.Mode.EDIT, editPatient);
+            invalidateRecentlySavedStatus();
             refreshTables();
         }
     }
@@ -261,7 +289,14 @@ public class PatientregisterController {
         System.out.println(newFilePath);
         currentPath = newFilePath.getAbsolutePath();
 
-        csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
+        if (!currentPath.endsWith(".csv")) {
+            showWrongFileTypeDialogue();
+            currentPath = null;
+
+        } else {
+            csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
+            validateRecentlySavedStatus();
+        }
     }
 
     /**
@@ -309,5 +344,29 @@ public class PatientregisterController {
         noSelectionAlert.setHeaderText("Patient information");
         noSelectionAlert.setContentText("You need to select a patient by highlighting them in the table.");
         noSelectionAlert.show();
+    }
+
+    /**
+     * Displays a warning to the user that the filetype must be .csv.
+     */
+    public void showWrongFileTypeDialogue() {
+        Alert wrongFileTypeAlert = new Alert(Alert.AlertType.WARNING);
+        wrongFileTypeAlert.setTitle("Wrong file type used");
+        wrongFileTypeAlert.setHeaderText("The file type of the saved file must be .csv!");
+        wrongFileTypeAlert.setContentText("" +
+                " To ensure the filetype is correct, press \"Save File As...\" again, and write \".csv\" at the end of your file name.");
+        wrongFileTypeAlert.show();
+    }
+
+    public void invalidateRecentlySavedStatus() {
+        this.recentlySaved = false;
+    }
+
+    public void validateRecentlySavedStatus() {
+        this.recentlySaved = true;
+    }
+
+    public boolean isRecentlySaved() {
+        return this.recentlySaved;
     }
 }

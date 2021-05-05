@@ -35,12 +35,12 @@
                         <MenuItem fx:id="importCSVFileMenuItem1" mnemonicParsing="false" onAction="#saveFile" text="Save File" />
                     <MenuItem fx:id="exportCSVFileMenuItem" mnemonicParsing="false" onAction="#saveFileAtSelectedPath" text="Save File As..." />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="exitProgramMenuItem" mnemonicParsing="false" onAction="#showCloseApplicationDialogue" text="Exit" />
+                        <MenuItem fx:id="exitProgramMenuItem" mnemonicParsing="false" onAction="#closeApplication" text="Exit" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem fx:id="addPatientMenuItem" mnemonicParsing="false" onAction="#showAddPatientDialogue" text="Add new patient     A">
+                    <MenuItem fx:id="addPatientMenuItem" mnemonicParsing="false" onAction="#showAddPatientDialogue" text="Add new patient">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -48,7 +48,7 @@
                                  </image>
                               </ImageView>
                            </graphic></MenuItem>
-                        <MenuItem fx:id="editPatientMenuItem" mnemonicParsing="false" onAction="#showEditPatientDialogue" text="Edit selected patient     E">
+                        <MenuItem fx:id="editPatientMenuItem" mnemonicParsing="false" onAction="#showEditPatientDialogue" text="Edit selected patient">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -56,7 +56,7 @@
                                  </image>
                               </ImageView>
                            </graphic></MenuItem>
-                        <MenuItem fx:id="removePatientMenuItem" mnemonicParsing="false" onAction="#showDeletePatientDialogue" text="Remove selected patient     Delete">
+                        <MenuItem fx:id="removePatientMenuItem" mnemonicParsing="false" onAction="#showDeletePatientDialogue" text="Remove selected patient">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
