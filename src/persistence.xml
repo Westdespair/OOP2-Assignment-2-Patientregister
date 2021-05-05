@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+    <!--
+    The persistence unit (pu) to be used to connect to a Derby Embedded database. En embedded database
+    is really just a file-system, not a running server, but you interact with the embedded database
+    in the same way you would a RDB-server.
+    Note that using an embedded database should only be used when there never is more than one
+    application (client) accessing the database.
+    -->
+    <persistence-unit name="st-olavs-register" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.iapi.jdbc.AutoloadedDriver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:derby:patientsdb;create=true"/>
+            <property name="jakarta.persistence.jdbc.user" value="app"/>
+            <property name="jakarta.persistence.jdbc.password" value="app"/>
+
+            <property name="eclipselink.target-database" value="Derby"/>
+
+            <!-- Alternatives: create-tables, drop-and-create-tables-->
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <!-- Alternatives: FINE (logs all SQL), ALL, CONFIG, INFO, WARNING..., OFF -->
+            <property name="eclipselink.logging.level" value="OFF"/>
+
+            <!--
+             The Database can be pre-filled with entries during startup. This would be very useful during testing
+             of the application, used in conjunction with "drop-and-create-tables". The SQL-statements for inserting
+             entries in the DB-table can be stored in a text-file. The line below, when un-commented, will
+             read SQL-statements from the file "META-INF/sql/data.sql" during application startup.
+             -->
+            <!--property name="javax.persistence.sql-load-script-source" value="META-INF/sql/data.sql"/-->
+
+        </properties>
+    </persistence-unit>
+
+    <!--
+    This persistence unit connects to a locally installed Derby Database server. To use this, we need to add
+    the derbyclient.jar to the path (the libs-folder).
+    Also, the DB-server must have been started (from a terminal window using "startNetworkServer").
+    -->
+    <persistence-unit name="patients-localdb-pu" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <property name="eclipselink.target-database" value="Derby"/>
+
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/contactsdb;create=true"/>
+            <property name="javax.persistence.jdbc.user" value="app"/>
+            <property name="javax.persistence.jdbc.password" value="app"/>
+
+            <!-- Alternatives: create-tables, drop-and-create-tables-->
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <!-- Alternatives: FINE (logs all SQL), ALL, CONFIG, INFO, WARNING..., OFF -->
+            <property name="eclipselink.logging.level" value="INFO"/>
+
+            <!--
+             The Database can be pre-filled with entries during startup. This would be very useful during testing
+             of the application, used in conjunction with "drop-and-create-tables". The SQL-statements for inserting
+             entries in the DB-table can be stored in a text-file. The line below, when un-commented, will
+             read SQL-statements from the file "META-INF/sql/data.sql" during application startup.
+             -->
+            <!--property name="javax.persistence.sql-load-script-source" value="META-INF/sql/data.sql"/-->
+
+        </properties>
+    </persistence-unit>
+
+
+    <!--
+    This persistence-unit connect to the MySQL-server installed at IDI in Trondheim. Prior to connecting,
+    you must contact stab-tk@idi.ntnu.no to have a user account and a database setup for you.
+    The URL of the server is: mysql-ait.stud.idi.ntnu.no
+    -->
+    <persistence-unit name="patients-mysql-pu" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>no.ntnu.idatx2001.patients.model.Patient</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql-ait.stud.idi.ntnu.no/asty"/>
+            <property name="javax.persistence.jdbc.user" value="asty"/>
+            <property name="javax.persistence.jdbc.password" value="SOME_PASSWORD"/>
+
+            <property name="eclipselink.target-database" value="MySQL"/>
+
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+
+            <property name="eclipselink.logging.level" value="INFO"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
