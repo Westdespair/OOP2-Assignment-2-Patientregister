@@ -70,10 +70,6 @@ public class PatientregisterController {
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         socialSecurityNumberColumn.setCellValueFactory(new PropertyValueFactory<>("socialSecurityNumber"));
 
-        //Test tableview functionality
-        //TODO: Remove this method call in the final update.
-        appPatientList.fillPatientListWithTestPatients();
-
         //Sets the list for the tableview as the internal list of the controller.
         this.observablePatientList =
                 FXCollections.observableArrayList(this.appPatientList.getPatientList());
@@ -295,7 +291,7 @@ public class PatientregisterController {
                 currentPath = null;
 
             } else {
-                csvWriter.convertPatientArrayToCSVFile(appPatientList, newFilePath.getAbsolutePath());
+                csvWriter.convertPatientArrayToCSVFile(appPatientList, currentPath);
                 validateRecentlySavedStatus();
             }
     }
@@ -355,7 +351,7 @@ public class PatientregisterController {
         wrongFileTypeAlert.setTitle("Wrong file type used");
         wrongFileTypeAlert.setHeaderText("The file type of the saved file must be .csv!");
         wrongFileTypeAlert.setContentText("" +
-                " To ensure the filetype is correct, press \"Save File As...\" again, and write \".csv\" at the end of your file name.");
+                "Press save again and write .csv at the end of the filename.");
         wrongFileTypeAlert.show();
     }
 

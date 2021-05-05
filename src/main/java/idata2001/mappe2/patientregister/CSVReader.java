@@ -77,7 +77,7 @@ public class CSVReader {
 
         //If the length of the list is 5, that means the file also contains a diagnosis field.
         //This needs to be accounted for.
-        if (splitStringList.length == listLengthWithDiagnosis) {
+        if (splitStringList.length >= listLengthWithDiagnosis) {
             readPatient.setDiagnosis(splitStringList[4]);
         }
         return readPatient;
